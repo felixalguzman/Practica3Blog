@@ -2,6 +2,7 @@ package encapsulacion;
 
 public class Usuario {
 
+    private long id;
     private String username;
     private String nombre;
     private String password;
@@ -11,12 +12,21 @@ public class Usuario {
     public Usuario() {
     }
 
-    public Usuario(String username, String nombre, String password, Boolean administrator, Boolean autor) {
-        this.username = username;
-        this.nombre = nombre;
-        this.password = password;
-        this.administrator = administrator;
-        this.autor = autor;
+    public Usuario(long id, String username, String nombre, String password, Boolean administrator, Boolean autor) {
+        this.setId(id);
+        this.setUsername(username);
+        this.setNombre(nombre);
+        this.setPassword(password);
+        this.setAdministrator(administrator);
+        this.setAutor(autor);
+    }
+
+    public long getId() {
+        return id;
+    }
+
+    public void setId(long id) {
+        this.id = id;
     }
 
     public String getUsername() {
