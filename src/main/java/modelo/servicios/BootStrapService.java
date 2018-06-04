@@ -1,6 +1,5 @@
 package modelo.servicios;
 
-import org.h2.tools.Server;
 
 import java.sql.Connection;
 import java.sql.SQLException;
@@ -21,7 +20,7 @@ public class BootStrapService {
                 "NOMBRE VARCHAR(50) NOT NULL, \n" +
                 "PASS VARCHAR(50) NOT NULL, \n" +
                 "ADMINISTRADOR BOOLEAN NOT NULL, \n" +
-                "AURTOR BOOLEAN NOT NULL \n" +
+                "AUTOR BOOLEAN NOT NULL \n" +
                 ");";
 
         String sqlEtiqueta = "CREATE TABLE IF NOT EXISTS ETIQUETA \n"+
