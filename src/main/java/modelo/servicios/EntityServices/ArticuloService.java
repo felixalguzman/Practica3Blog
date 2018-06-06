@@ -1,8 +1,8 @@
-package modelo.servicios;
+package modelo.servicios.EntityServices;
 
 import encapsulacion.Articulo;
-import modelo.dao.ArticuloDAO;
-import modelo.dao.ArticuloDAOImpl;
+import modelo.dao.interfaces.ArticuloDAO;
+import modelo.dao.Implementations.ArticuloDAOImpl;
 
 import java.util.List;
 

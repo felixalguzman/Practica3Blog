@@ -1,4 +1,4 @@
-package modelo.dao;
+package modelo.dao.Implementations;
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;
@@ -10,7 +10,8 @@ import java.util.logging.Level;
 import java.util.logging.Logger;
 
 import encapsulacion.Usuario;
-import modelo.servicios.DBService;
+import modelo.dao.interfaces.UsuarioDAO;
+import modelo.servicios.Utils.DBService;
 
 public class UsuarioDAOImpl implements UsuarioDAO {
 

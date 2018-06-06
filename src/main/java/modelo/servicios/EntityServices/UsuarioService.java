@@ -1,8 +1,8 @@
-package modelo.servicios;
+package modelo.servicios.EntityServices;
 
 import encapsulacion.Usuario;
-import modelo.dao.UsuarioDAO;
-import modelo.dao.UsuarioDAOImpl;
+import modelo.dao.interfaces.UsuarioDAO;
+import modelo.dao.Implementations.UsuarioDAOImpl;
 
 import java.util.List;
 

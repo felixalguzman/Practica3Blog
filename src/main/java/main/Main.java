@@ -3,16 +3,14 @@ package main;
 import java.sql.Date;
 import java.sql.SQLException;
 import java.time.LocalDate;
-import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
 import encapsulacion.Articulo;
 import encapsulacion.Comentario;
-import encapsulacion.Etiqueta;
 import encapsulacion.Usuario;
-import modelo.dao.EtiquetaDAOImpl;
-import modelo.servicios.*;
+import modelo.servicios.EntityServices.ComentarioService;
+import modelo.servicios.Utils.BootStrapService;
 
 public class Main {
 

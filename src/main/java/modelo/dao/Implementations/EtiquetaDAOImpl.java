@@ -1,8 +1,9 @@
-package modelo.dao;
+package modelo.dao.Implementations;
 
 import encapsulacion.Etiqueta;
-import modelo.servicios.ArticuloService;
-import modelo.servicios.DBService;
+import modelo.dao.interfaces.EtiquetaDAO;
+import modelo.servicios.EntityServices.ArticuloService;
+import modelo.servicios.Utils.DBService;
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;

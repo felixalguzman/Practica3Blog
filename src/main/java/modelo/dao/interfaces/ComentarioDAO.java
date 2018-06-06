@@ -1,4 +1,4 @@
-package modelo.dao;
+package modelo.dao.interfaces;
 
 import encapsulacion.Comentario;
 import encapsulacion.Etiqueta;

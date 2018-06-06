@@ -1,8 +1,8 @@
-package modelo.servicios;
+package modelo.servicios.EntityServices;
 
 import encapsulacion.Etiqueta;
-import modelo.dao.EtiquetaDAO;
-import modelo.dao.EtiquetaDAOImpl;
+import modelo.dao.interfaces.EtiquetaDAO;
+import modelo.dao.Implementations.EtiquetaDAOImpl;
 
 import java.util.List;
 

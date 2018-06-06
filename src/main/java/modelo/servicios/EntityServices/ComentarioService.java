@@ -1,8 +1,8 @@
-package modelo.servicios;
+package modelo.servicios.EntityServices;
 
 import encapsulacion.Comentario;
-import modelo.dao.ComentarioDAO;
-import modelo.dao.ComentarioDAOImpl;
+import modelo.dao.interfaces.ComentarioDAO;
+import modelo.dao.Implementations.ComentarioDAOImpl;
 
 import java.util.List;
 
