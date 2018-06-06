@@ -9,8 +9,6 @@ import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
-import org.eclipse.jetty.server.Authentication.User;
-
 import encapsulacion.Usuario;
 import modelo.servicios.DBService;
 
@@ -25,7 +23,7 @@ public class UsuarioDAOImpl implements UsuarioDAO {
     try	{
 
         con = DBService.getInstancia().connection();
-        String sql = "Insert into USUARIO(id, username, nombre, pass, administrador, autor) values(?, ?, ?, ?, ?, ?); ";
+        String sql = "Insert into PUBLIC.USUARIO (id, username, nombre, pass, administrador, autor) values(?, ?, ?, ?, ?, ?); ";
         PreparedStatement preparedStatement = con.prepareStatement(sql);
 
         preparedStatement.setLong(1, e.getId());
@@ -46,8 +44,8 @@ public class UsuarioDAOImpl implements UsuarioDAO {
             try {
 				con.close();
 			} catch (SQLException e1) {
-				
-			}
+                Logger.getLogger(UsuarioDAOImpl.class.getName()).log(Level.SEVERE, null, e);
+            }
         }
 	}
 
@@ -89,7 +87,7 @@ public class UsuarioDAOImpl implements UsuarioDAO {
 
         try {
             con = DBService.getInstancia().connection();
-            String sql = "delete from usuario u where u.id=?";
+            String sql = "delete from PUBLIC.USUARIO u where u.id=?";
             PreparedStatement preparedStatement = con.prepareStatement(sql);
             preparedStatement.setLong(1, e.getId());
 
@@ -114,7 +112,7 @@ public class UsuarioDAOImpl implements UsuarioDAO {
         Connection con = null;
 
         try {
-            String sql = "select * from Usuario";
+            String sql = "select * from PUBLIC.USUARIO";
             con = DBService.getInstancia().connection();
 
             PreparedStatement preparedStatement = con.prepareStatement(sql);
@@ -133,13 +131,15 @@ public class UsuarioDAOImpl implements UsuarioDAO {
                 list.add(usuario);
             }
         } catch (Exception e) {
-            
+            Logger.getLogger(UsuarioDAOImpl.class.getName()).log(Level.SEVERE, null, e);
+
         }finally{
             try {
 				con.close();
 			} catch (SQLException e) {
-				
-			}
+                Logger.getLogger(UsuarioDAOImpl.class.getName()).log(Level.SEVERE, null, e);
+
+            }
         }
 
 
