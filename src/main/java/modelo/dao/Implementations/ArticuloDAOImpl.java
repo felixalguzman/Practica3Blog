@@ -1,7 +1,9 @@
 package modelo.dao.Implementations;
 
 import encapsulacion.Articulo;
+import encapsulacion.Usuario;
 import modelo.dao.interfaces.ArticuloDAO;
+import modelo.servicios.EntityServices.UsuarioService;
 import modelo.servicios.Utils.DBService;
 
 import java.sql.Connection;
@@ -105,7 +107,7 @@ public class ArticuloDAOImpl implements ArticuloDAO {
         Connection con = null;
 
         try {
-            String sql = "select * from PUBLIC.ARTICULO";
+            String sql = "select * from PUBLIC.ARTICULO ORDER BY FECHA DESC ";
             con = DBService.getInstancia().connection();
 
             PreparedStatement preparedStatement = con.prepareStatement(sql);
@@ -113,11 +115,17 @@ public class ArticuloDAOImpl implements ArticuloDAO {
 
             while (resultSet.next()) {
 
-                Articulo etiqueta = new Articulo();
-                etiqueta.setId(resultSet.getLong("id"));
-               // etiqueta.setArticulo(resultSet.getString("etiqueta"));
+                Articulo articulo = new Articulo();
+                articulo.setId(resultSet.getLong("id"));
+                articulo.setTitulo(resultSet.getString("Titulo"));
+                articulo.setCuerpo(resultSet.getString("Cuerpo"));
+                UsuarioService usuarioService = new UsuarioService();
+                Usuario usuario = usuarioService.getById(resultSet.getLong("autor"));
+                articulo.setAutor(usuario);
+                articulo.setFecha(resultSet.getDate("fecha"));
 
-                list.add(etiqueta);
+
+                list.add(articulo);
             }
         } catch (Exception e) {
             Logger.getLogger(ArticuloDAOImpl.class.getName()).log(Level.SEVERE, null, e);
@@ -142,7 +150,7 @@ public class ArticuloDAOImpl implements ArticuloDAO {
 
         try {
             con = DBService.getInstancia().connection();
-            String sql = "SELECT * FROM PUBLIC.ARTICULO a, PUBLIC.USUARIO u WHERE a.ID = ? AND a.AUTOR = u.ID";
+            String sql = "SELECT * FROM PUBLIC.ARTICULO a WHERE a.ID = ?";
             PreparedStatement preparedStatement = con.prepareStatement(sql);
             preparedStatement.setLong(1, id);
 
@@ -155,6 +163,10 @@ public class ArticuloDAOImpl implements ArticuloDAO {
                 articulo.setId(resultSet.getLong("id"));
                 articulo.setTitulo(resultSet.getString("titulo"));
                 articulo.setCuerpo(resultSet.getString("cuerpo"));
+                UsuarioService usuarioService = new UsuarioService();
+                Usuario usuario = usuarioService.getById(resultSet.getLong("autor"));
+                articulo.setAutor(usuario);
+                articulo.setFecha(resultSet.getDate("fecha"));
                 //articulo.setAutor(resultSet.getString("titulo"));
             }
 
