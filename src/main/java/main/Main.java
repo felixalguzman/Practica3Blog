@@ -22,8 +22,7 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-import static spark.Spark.get;
-import static spark.Spark.staticFiles;
+import static spark.Spark.*;
 
 public class Main {
 
@@ -44,15 +43,12 @@ public class Main {
 //        Usuario usuario = usuarioService.getById(1L);
 //        System.out.println(usuario.getNombre());
 
-        Articulo articulo = new Articulo(2l, "Ta haciendo calor", "Esta haciendo el real calor, raro es que la gente no se ponga mala con este solaso que hace.", usuario, Date.valueOf(LocalDate.now()), null, null);
         ArticuloService  articuloService = new ArticuloService();
 //        articuloService.insert(articulo);
 
-        Etiqueta etiqueta = new Etiqueta(2l, "klk", articulo);
         EtiquetaService etiquetaService = new EtiquetaService();
 //        etiquetaService.insert(etiqueta);
 
-        Comentario comentario = new Comentario(5l, "el que el que", usuario, articulo);
         ComentarioService comentarioService = new ComentarioService();
 
 
@@ -66,12 +62,13 @@ public class Main {
 
         FreeMarkerEngine freeMarkerEngine = new FreeMarkerEngine(configuration);
 
-        get("/", (request, response) -> {
-            Map<String, Object> attributes = new HashMap<>();
-            return new ModelAndView(attributes, "login.ftl");
-        }, freeMarkerEngine);
 
-        /*get("/", (request, response) -> {
+//        get("/", (request, response) -> {
+//            Map<String, Object> attributes = new HashMap<>();
+//            return new ModelAndView(attributes, "login.ftl");
+//        }, freeMarkerEngine);
+
+        get("/", (request, response) -> {
             Map<String, Object> attributes = new HashMap<>();
             attributes.put("titulo", "Inicio");
 
@@ -92,7 +89,24 @@ public class Main {
 
             return new ModelAndView(attributes, "post.ftl");
         }, freeMarkerEngine);
-        */
+
+
+        post("/agregarComentario", (request, response) -> {
+
+            String comentario = request.queryParams("comentario");
+            String articulo = request.queryParams("articulo");
+            String autor = request.queryParams("autor");
+
+            Usuario usuario1 = usuarioService.getById(Integer.parseInt(autor));
+            Articulo articulo1 = articuloService.getById(Integer.parseInt(articulo));
+
+            comentarioService.insert(new Comentario(comentario, usuario1, articulo1));
+
+
+
+            response.redirect("/verMas/" + articulo);
+            return  "";
+        });
 
 
 

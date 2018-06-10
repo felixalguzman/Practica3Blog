@@ -24,13 +24,13 @@ public class ComentarioDAOImpl implements ComentarioDAO {
         try	{
 
             con = DBService.getInstancia().connection();
-            String sql = "Insert into PUBLIC.COMENTARIO(id, COMENTARIO, AUTOR, ARTICULO) values(?, ?, ?, ?); ";
+            String sql = "Insert into PUBLIC.COMENTARIO(id, COMENTARIO, AUTOR, ARTICULO) values(NEXTVAL('SECUENCIA_COMENTARIO') , ?, ?, ?); ";
             PreparedStatement preparedStatement = con.prepareStatement(sql);
 
-            preparedStatement.setLong(1, e.getId());
-            preparedStatement.setString(2, e.getComentario());
-            preparedStatement.setLong(3, e.getAutor().getId());
-            preparedStatement.setLong(4, e.getArticulo().getId());
+//            preparedStatement.setLong(1, e.getId());
+            preparedStatement.setString(1, e.getComentario());
+            preparedStatement.setLong(2, e.getAutor().getId());
+            preparedStatement.setLong(3, e.getArticulo().getId());
             preparedStatement.execute();
 
 

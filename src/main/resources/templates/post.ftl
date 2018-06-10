@@ -79,9 +79,11 @@
           <div class="card my-4">
             <h5 class="card-header">Deja un comentario:</h5>
             <div class="card-body">
-              <form>
+              <form method="post" action="/agregarComentario">
                 <div class="form-group">
-                  <textarea class="form-control" rows="3"></textarea>
+                    <textarea class="form-control" rows="3" name="comentario"></textarea>
+                    <input type="hidden" name="articulo" value="${articulo.id}">
+                    <input type="hidden" name="autor" value="${articulo.autor.id}">
                 </div>
                 <button style="float: right" type="submit" class="btn btn-primary">Guardar</button>
               </form>
