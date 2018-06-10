@@ -8,7 +8,7 @@ import java.util.logging.Logger;
 public class DBService {
 
     private static DBService instancia;
-    private String url = "jdbc:h2:tcp://localhost/~/blog";
+    private String url = "jdbc:h2:~/blog";
 
     public static DBService getInstancia(){
 
