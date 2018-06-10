@@ -67,8 +67,12 @@ public class Main {
 
         FreeMarkerEngine freeMarkerEngine = new FreeMarkerEngine(configuration);
 
-
         get("/", (request, response) -> {
+            Map<String, Object> attributes = new HashMap<>();
+            return new ModelAndView(attributes, "login.ftl");
+        }, freeMarkerEngine);
+
+        /*get("/", (request, response) -> {
             Map<String, Object> attributes = new HashMap<>();
             attributes.put("titulo", "Inicio");
 
@@ -87,6 +91,7 @@ public class Main {
 
             return new ModelAndView(attributes, "post.ftl");
         }, freeMarkerEngine);
+        */
 
     }
 }
