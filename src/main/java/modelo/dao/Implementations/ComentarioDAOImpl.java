@@ -1,7 +1,9 @@
 package modelo.dao.Implementations;
 
 import encapsulacion.Comentario;
+import encapsulacion.Usuario;
 import modelo.dao.interfaces.ComentarioDAO;
+import modelo.servicios.EntityServices.UsuarioService;
 import modelo.servicios.Utils.DBService;
 
 import java.sql.Connection;
@@ -185,6 +187,9 @@ public class ComentarioDAOImpl implements ComentarioDAO {
                 Comentario comentario = new Comentario();
                 comentario.setId(resultSet.getLong("ID"));
                 comentario.setComentario(resultSet.getString("comentario"));
+                UsuarioService usuarioService = new UsuarioService();
+                Usuario usuario = usuarioService.getById(resultSet.getLong("autor"));
+                comentario.setAutor(usuario);
                 list.add(comentario);
             }
 

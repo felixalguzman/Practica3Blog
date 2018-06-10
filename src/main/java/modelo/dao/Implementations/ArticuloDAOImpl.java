@@ -1,8 +1,10 @@
 package modelo.dao.Implementations;
 
 import encapsulacion.Articulo;
+import encapsulacion.Etiqueta;
 import encapsulacion.Usuario;
 import modelo.dao.interfaces.ArticuloDAO;
+import modelo.servicios.EntityServices.EtiquetaService;
 import modelo.servicios.EntityServices.UsuarioService;
 import modelo.servicios.Utils.DBService;
 
@@ -163,11 +165,14 @@ public class ArticuloDAOImpl implements ArticuloDAO {
                 articulo.setId(resultSet.getLong("id"));
                 articulo.setTitulo(resultSet.getString("titulo"));
                 articulo.setCuerpo(resultSet.getString("cuerpo"));
+
                 UsuarioService usuarioService = new UsuarioService();
                 Usuario usuario = usuarioService.getById(resultSet.getLong("autor"));
                 articulo.setAutor(usuario);
+
                 articulo.setFecha(resultSet.getDate("fecha"));
-                //articulo.setAutor(resultSet.getString("titulo"));
+                EtiquetaService etiquetaService = new EtiquetaService();
+
             }
 
         }catch (Exception e){

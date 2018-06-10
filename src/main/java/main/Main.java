@@ -37,7 +37,7 @@ public class Main {
 
 
         UsuarioService usuarioService = new UsuarioService();
-        usuarioService.insert(usuario);
+//        usuarioService.insert(usuario);
         //usuarioService.delete(usuario);
         //usuarioService.update(usuario);
 
@@ -46,19 +46,18 @@ public class Main {
 
         Articulo articulo = new Articulo(2l, "Ta haciendo calor", "Esta haciendo el real calor, raro es que la gente no se ponga mala con este solaso que hace.", usuario, Date.valueOf(LocalDate.now()), null, null);
         ArticuloService  articuloService = new ArticuloService();
-        articuloService.insert(articulo);
+//        articuloService.insert(articulo);
 
         Etiqueta etiqueta = new Etiqueta(2l, "klk", articulo);
         EtiquetaService etiquetaService = new EtiquetaService();
-        etiquetaService.insert(etiqueta);
+//        etiquetaService.insert(etiqueta);
 
         Comentario comentario = new Comentario(5l, "el que el que", usuario, articulo);
         ComentarioService comentarioService = new ComentarioService();
 
-        List<Comentario> list =comentarioService.getByArticulo(articulo.getId());
-        System.out.println(Arrays.asList(list));
 
-        BootStrapService.stopDb();
+
+
 
         staticFiles.location("/templates");
 
@@ -72,8 +71,9 @@ public class Main {
             Map<String, Object> attributes = new HashMap<>();
             attributes.put("titulo", "Inicio");
 
-
+            attributes.put("etiquetas", etiquetaService.getAll());
             attributes.put("list", articuloService.getAll());
+
             return new ModelAndView(attributes, "inicio.ftl");
         }, freeMarkerEngine);
 
@@ -84,9 +84,15 @@ public class Main {
 
             Articulo articulo2 = articuloService.getById(Integer.parseInt(idArticulo));
             attributes.put("articulo", articulo2);
+            attributes.put("comentarios", comentarioService.getByArticulo(Integer.parseInt(idArticulo)));
 
             return new ModelAndView(attributes, "post.ftl");
         }, freeMarkerEngine);
+
+
+
+
+
 
     }
 }
