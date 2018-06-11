@@ -175,10 +175,10 @@ public class Main {
 
 
             System.out.println(user + " pass : " + contra);
-
             Usuario usuario1 = usuarioService.validateLogIn(user, contra);
 
             if (usuario1 != null) {
+
                 if( recordar!= null && recordar.equalsIgnoreCase("on")) {
 
 
@@ -190,7 +190,7 @@ public class Main {
 
                     System.out.println("user encryp: " + userEncrypt + " contra encryp: " + contraEncrypt);
 
-                    response.cookie("/", "login", userEncrypt + "," + contraEncrypt, 604800, true); //incluyendo el path del cookie.
+                    response.cookie("/", "login", userEncrypt + "," + contraEncrypt, 604800, false); //incluyendo el path del cookie.
                 }
                 usuario = usuario1;
                 response.redirect("/inicio");
