@@ -14,6 +14,10 @@ public class Etiqueta {
         this.etiqueta = etiqueta;
         this.articulo = articulo;
     }
+    public Etiqueta(String etiqueta, Articulo articulo) {
+        this.etiqueta = etiqueta;
+        this.articulo = articulo;
+    }
 
     public long getId() {
         return id;

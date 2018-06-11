@@ -26,6 +26,13 @@ public class Articulo {
         this.listaEtiquetas = listaEtiquetas;
     }
 
+    public Articulo(String titulo, String cuerpo, Usuario autor, Date fecha) {
+        this.titulo = titulo;
+        this.cuerpo = cuerpo;
+        this.autor = autor;
+        this.fecha = fecha;
+    }
+
     public long getId() {
         return id;
     }

@@ -24,6 +24,11 @@ public class ArticuloService implements ArticuloDAO {
     }
 
     @Override
+    public long getNextID() {
+        return articuloDAO.getNextID();
+    }
+
+    @Override
     public void delete(Articulo e) {
         articuloDAO.delete(e);
     }

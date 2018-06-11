@@ -14,13 +14,9 @@ import modelo.servicios.Utils.BootStrapService;
 import spark.ModelAndView;
 import spark.template.freemarker.FreeMarkerEngine;
 
-import java.sql.Date;
+import java.util.*;
 import java.sql.SQLException;
 import java.time.LocalDate;
-import java.util.Arrays;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
 
 import static spark.Spark.*;
 
@@ -111,10 +107,28 @@ public class Main {
         get("/agregarPost", (request, response) -> configuration.getTemplate("agregarPost.ftl"));
 
 
-        get("/guardarPost", (request, response) -> {
+        post("/guardarPost", (request, response) -> {
+            Usuario autor = usuarioService.getById(2L);
+            String titulo = request.queryParams("titulo");
+            String cuerpo = request.queryParams("cuerpo");
+            long now = System.currentTimeMillis();
+            java.sql.Date nowsql = new java.sql.Date(now);
+
+            String etiquetas = request.queryParams("etiquetas");
+
+            String[] tagsarray = etiquetas.split(",");
+            Long articleid = articuloService.getNextID();
+            Articulo art = new Articulo(titulo, cuerpo, autor, nowsql);
+            articuloService.insert(art);
 
 
+            for(String s : tagsarray){
+                Etiqueta e = new Etiqueta(s, articuloService.getById(articleid));
+                etiquetaService.insert(e);
+            }
 
+
+            response.redirect("/");
             return "";
         });
 

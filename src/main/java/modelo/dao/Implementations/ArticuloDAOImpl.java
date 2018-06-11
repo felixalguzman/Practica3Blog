@@ -26,14 +26,14 @@ public class ArticuloDAOImpl implements ArticuloDAO {
         try	{
 
             con = DBService.getInstancia().connection();
-            String sql = "Insert into PUBLIC.ARTICULO(id, TITULO, CUERPO, AUTOR, FECHA) values(?, ?, ?, ?, ?); ";
+            String sql = "Insert into PUBLIC.ARTICULO(id, TITULO, CUERPO, AUTOR, FECHA) values(NEXTVAL('SECUENCIA_ARTICULO'), ?, ?, ?, ?); ";
             PreparedStatement preparedStatement = con.prepareStatement(sql);
 
-            preparedStatement.setLong(1, e.getId());
-            preparedStatement.setString(2, e.getTitulo());
-            preparedStatement.setString(3, e.getCuerpo());
-            preparedStatement.setLong(4, e.getAutor().getId());
-            preparedStatement.setDate(5, e.getFecha());
+            //preparedStatement.setLong(1, e.getId());
+            preparedStatement.setString(1, e.getTitulo());
+            preparedStatement.setString(2, e.getCuerpo());
+            preparedStatement.setLong(3, e.getAutor().getId());
+            preparedStatement.setDate(4, e.getFecha());
 
             preparedStatement.execute();
 
@@ -76,6 +76,34 @@ public class ArticuloDAOImpl implements ArticuloDAO {
             }
         }
 
+    }
+
+    @Override
+    public long getNextID(){
+        Long next = null;
+        Connection con = null;
+
+        try{
+            con = DBService.getInstancia().connection();
+            String sql = "SELECT CURRVAL('PUBLIC.SECUENCIA_ARTICULO')";
+            PreparedStatement preparedStatement = con.prepareStatement(sql);
+            preparedStatement.execute();
+
+            ResultSet resultSet = preparedStatement.executeQuery();
+
+            while (resultSet.next()) {
+                next = resultSet.getLong(1);
+            }
+        }catch (Exception e1){
+            Logger.getLogger(ArticuloDAOImpl.class.getName()).log(Level.SEVERE, null, e1);
+        }finally {
+            try{
+                con.close();
+            }catch (SQLException e1){
+                Logger.getLogger(ArticuloDAOImpl.class.getName()).log(Level.SEVERE, null, e1);
+            }
+        }
+        return next+1;
     }
 
     @Override

@@ -23,12 +23,12 @@ public class EtiquetaDAOImpl implements EtiquetaDAO {
         try	{
 
             con = DBService.getInstancia().connection();
-            String sql = "Insert into PUBLIC.ETIQUETA(id, ETIQUETA, ARTICULO) values(?, ?, ?); ";
+            String sql = "Insert into PUBLIC.ETIQUETA(id, ETIQUETA, ARTICULO) values(NEXTVAL('SECUENCIA_ETIQUETA'), ?, ?); ";
             PreparedStatement preparedStatement = con.prepareStatement(sql);
 
-            preparedStatement.setLong(1, e.getId());
-            preparedStatement.setString(2, e.getEtiqueta());
-            preparedStatement.setLong(3, e.getArticulo().getId());
+            //preparedStatement.setLong(1, e.getId());
+            preparedStatement.setString(1, e.getEtiqueta());
+            preparedStatement.setLong(2, e.getArticulo().getId());
 
             preparedStatement.execute();
 

@@ -63,17 +63,17 @@
                  <div class="form-group">
                      <h1 class="mt-4">Agregar Post</h1>
                      <hr>
-                     <input type="text" class="form-control" placeholder="Titulo" aria-label="Username" aria-describedby="basic-addon1">
+                     <input type="text" class="form-control" placeholder="Titulo" aria-label="Username" aria-describedby="basic-addon1" name="titulo">
                  </div>
 
                  <div class="form-group">
                      <h4 class="mt-4">Contenido</h4>
-                     <textarea class="form-control"  rows="3" placeholder="Cuerpo del post"></textarea>
+                     <textarea class="form-control"  rows="3" placeholder="Cuerpo del post" name="cuerpo"></textarea>
                  </div>
 
                  <div class="form-group">
                      <h4 class="mt-4">Etiquetas</h4>
-                     <input type="text" class="form-control" placeholder="etiqueta1, etiqueta2,...">
+                     <input type="text" class="form-control" placeholder="etiqueta1, etiqueta2,..." name="etiquetas">
                  </div>
                     <button style="float: right" type="submit" class="btn btn-primary">Guardar</button>
              </form>

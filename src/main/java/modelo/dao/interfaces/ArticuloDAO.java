@@ -10,6 +10,8 @@ public interface ArticuloDAO {
 
     void update(Articulo e);
 
+    long getNextID();
+
     void delete(Articulo e);
 
     List<Articulo> getAll();
