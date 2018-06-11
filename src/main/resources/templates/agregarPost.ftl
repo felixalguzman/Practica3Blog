@@ -35,7 +35,7 @@
               </a>
             </li>
             <li class="nav-item">
-              <a class="nav-link" href="/agregarPost">Agregar Post</a>
+              <a class="nav-link" href="#">About</a>
             </li>
             <li class="nav-item">
               <a class="nav-link" href="#">Services</a>
@@ -56,50 +56,28 @@
         <!-- Post Content Column -->
         <div class="col-lg-8">
 
-          <!-- Title -->
-          <h1 class="mt-4">${articulo.titulo}</h1>
+            <div class="lead">
+              <!-- Title -->
+             <form method="post" action="/guardarPost">
 
-          <!-- Author -->
-          <p class="lead">
-            Por
-            <a href="#">${articulo.autor.nombre}</a>
-          </p>
+                 <div class="form-group">
+                     <h1 class="mt-4">Agregar Post</h1>
+                     <hr>
+                     <input type="text" class="form-control" placeholder="Titulo" aria-label="Username" aria-describedby="basic-addon1">
+                 </div>
 
-          <hr>
+                 <div class="form-group">
+                     <h4 class="mt-4">Contenido</h4>
+                     <textarea class="form-control"  rows="3" placeholder="Cuerpo del post"></textarea>
+                 </div>
 
-          <!-- Post Content -->
-          <p class="lead">${articulo.cuerpo}</p>
-
-          <!-- Date/Time -->
-          <p>Publicado el ${articulo.fecha}</p>
-
-          <hr>
-
-          <!-- Comments Form -->
-          <div class="card my-4">
-            <h5 class="card-header">Deja un comentario:</h5>
-            <div class="card-body">
-              <form method="post" action="/agregarComentario">
-                <div class="form-group">
-                    <textarea class="form-control" rows="3" name="comentario"></textarea>
-                    <input type="hidden" name="articulo" value="${articulo.id}">
-                    <input type="hidden" name="autor" value="${articulo.autor.id}">
-                </div>
-                <button style="float: right" type="submit" class="btn btn-primary">Guardar</button>
-              </form>
+                 <div class="form-group">
+                     <h4 class="mt-4">Etiquetas</h4>
+                     <input type="text" class="form-control" placeholder="etiqueta1, etiqueta2,...">
+                 </div>
+                    <button style="float: right" type="submit" class="btn btn-primary">Guardar</button>
+             </form>
             </div>
-          </div>
-
-
-          <#list comentarios as comentario>
-                <!-- Single Comment -->
-          <div class="media mb-4">
-              <div class="media-body">
-                  <h5 class="mt-0">${comentario.autor.nombre}</h5>
-                  ${comentario.comentario}
-              </div>
-          </div>
-          </#list>
 
 
         </div>

@@ -108,7 +108,15 @@ public class Main {
             return  "";
         });
 
+        get("/agregarPost", (request, response) -> configuration.getTemplate("agregarPost.ftl"));
 
+
+        get("/guardarPost", (request, response) -> {
+
+
+
+            return "";
+        });
 
 
 
