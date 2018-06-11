@@ -39,6 +39,7 @@ public class ComentarioDAOImpl implements ComentarioDAO {
         }finally{
 
             try {
+                assert con != null;
                 con.close();
             } catch (SQLException e1) {
                 Logger.getLogger(ComentarioDAOImpl.class.getName()).log(Level.SEVERE, null, e1);
@@ -66,6 +67,7 @@ public class ComentarioDAOImpl implements ComentarioDAO {
             Logger.getLogger(ComentarioDAOImpl.class.getName()).log(Level.SEVERE, null, e1);
         }finally {
             try {
+                assert con != null;
                 con.close();
             } catch (SQLException e1) {
                 Logger.getLogger(ComentarioDAOImpl.class.getName()).log(Level.SEVERE, null, e1);
@@ -80,7 +82,7 @@ public class ComentarioDAOImpl implements ComentarioDAO {
 
         try {
             con = DBService.getInstancia().connection();
-            String sql = "delete from PUBLIC.COMENTARIO u where u.id=?";
+            String sql = "delete from PUBLIC.COMENTARIO where id=?";
             PreparedStatement preparedStatement = con.prepareStatement(sql);
             preparedStatement.setLong(1, e.getId());
 
@@ -91,6 +93,7 @@ public class ComentarioDAOImpl implements ComentarioDAO {
 
         }finally {
             try {
+                assert con != null;
                 con.close();
             } catch (SQLException e1) {
                 Logger.getLogger(ComentarioDAOImpl.class.getName()).log(Level.SEVERE, null, e1);
@@ -125,6 +128,7 @@ public class ComentarioDAOImpl implements ComentarioDAO {
 
         }finally{
             try {
+                assert con != null;
                 con.close();
             } catch (SQLException e) {
                 Logger.getLogger(ComentarioDAOImpl.class.getName()).log(Level.SEVERE, null, e);
@@ -160,6 +164,7 @@ public class ComentarioDAOImpl implements ComentarioDAO {
 
         }finally {
             try {
+                assert con != null;
                 con.close();
             } catch (SQLException e) {
                 Logger.getLogger(ComentarioDAOImpl.class.getName()).log(Level.SEVERE, null, e);
@@ -198,6 +203,7 @@ public class ComentarioDAOImpl implements ComentarioDAO {
 
         }finally {
             try {
+                assert con != null;
                 con.close();
             } catch (SQLException e) {
                 Logger.getLogger(ComentarioDAOImpl.class.getName()).log(Level.SEVERE, null, e);

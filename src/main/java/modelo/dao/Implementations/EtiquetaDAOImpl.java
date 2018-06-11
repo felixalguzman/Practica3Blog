@@ -38,6 +38,7 @@ public class EtiquetaDAOImpl implements EtiquetaDAO {
         }finally{
 
             try {
+                assert con != null;
                 con.close();
             } catch (SQLException e1) {
                 Logger.getLogger(EtiquetaDAOImpl.class.getName()).log(Level.SEVERE, null, e1);
@@ -65,6 +66,7 @@ public class EtiquetaDAOImpl implements EtiquetaDAO {
             Logger.getLogger(EtiquetaDAOImpl.class.getName()).log(Level.SEVERE, null, e1);
         }finally {
             try {
+                assert con != null;
                 con.close();
             } catch (SQLException e1) {
                 Logger.getLogger(EtiquetaDAOImpl.class.getName()).log(Level.SEVERE, null, e1);
@@ -79,7 +81,7 @@ public class EtiquetaDAOImpl implements EtiquetaDAO {
 
         try {
             con = DBService.getInstancia().connection();
-            String sql = "delete from PUBLIC.ETIQUETA u where u.id=?";
+            String sql = "delete from PUBLIC.ETIQUETA where id=?";
             PreparedStatement preparedStatement = con.prepareStatement(sql);
             preparedStatement.setLong(1, e.getId());
 
@@ -90,6 +92,7 @@ public class EtiquetaDAOImpl implements EtiquetaDAO {
 
         }finally {
             try {
+                assert con != null;
                 con.close();
             } catch (SQLException e1) {
                 Logger.getLogger(EtiquetaDAOImpl.class.getName()).log(Level.SEVERE, null, e1);
@@ -111,7 +114,6 @@ public class EtiquetaDAOImpl implements EtiquetaDAO {
             ResultSet resultSet = preparedStatement.executeQuery();
 
             while (resultSet.next()) {
-
                 Etiqueta etiqueta = new Etiqueta();
                 ArticuloService articuloService = new ArticuloService();
                 etiqueta.setId(resultSet.getLong("id"));
@@ -121,17 +123,14 @@ public class EtiquetaDAOImpl implements EtiquetaDAO {
             }
         } catch (Exception e) {
             Logger.getLogger(EtiquetaDAOImpl.class.getName()).log(Level.SEVERE, null, e);
-
         }finally{
             try {
+                assert con != null;
                 con.close();
             } catch (SQLException e) {
                 Logger.getLogger(EtiquetaDAOImpl.class.getName()).log(Level.SEVERE, null, e);
-
             }
         }
-
-
         return list;
     }
 
@@ -161,6 +160,7 @@ public class EtiquetaDAOImpl implements EtiquetaDAO {
 
         }finally {
             try {
+                assert con != null;
                 con.close();
             } catch (SQLException e) {
                 Logger.getLogger(EtiquetaDAOImpl.class.getName()).log(Level.SEVERE, null, e);
@@ -197,6 +197,7 @@ public class EtiquetaDAOImpl implements EtiquetaDAO {
 
         }finally {
             try {
+                assert con != null;
                 con.close();
             } catch (SQLException e) {
                 Logger.getLogger(EtiquetaDAOImpl.class.getName()).log(Level.SEVERE, null, e);

@@ -56,12 +56,14 @@ public class ArticuloDAOImpl implements ArticuloDAO {
         try {
 
             con = DBService.getInstancia().connection();
-            String sql = "UPDATE PUBLIC.ETIQUETA u SET id = ?, ETIQUETA= ? WHERE u.id = ?";
+            String sql = "UPDATE PUBLIC.ARTICULO u SET id = ?, TITULO = ?, CUERPO = ?, FECHA = ?  WHERE u.id = ?";
             PreparedStatement preparedStatement = con.prepareStatement(sql);
 
             preparedStatement.setLong(1, e.getId());
-            //preparedStatement.setString(2, e.getArticulo());
-            preparedStatement.setLong(3, e.getId());
+            preparedStatement.setString(2, e.getTitulo());
+            preparedStatement.setString(3, e.getCuerpo());
+            preparedStatement.setDate(4, e.getFecha());
+            preparedStatement.setLong(5, e.getId());
 
             preparedStatement.executeUpdate();
 

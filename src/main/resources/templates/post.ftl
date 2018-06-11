@@ -66,6 +66,8 @@
 
           <!-- Date/Time -->
           <p>Publicado el ${articulo.fecha}</p>
+          <a href="/editarPost/${articulo.id}" class="btn btn-primary">Editar Articulo</a>
+
 
           <hr>
 
