@@ -43,7 +43,8 @@ public class UsuarioDAOImpl implements UsuarioDAO {
         }finally{
 
             try {
-				con.close();
+                assert con != null;
+                con.close();
 			} catch (SQLException e1) {
                 Logger.getLogger(UsuarioDAOImpl.class.getName()).log(Level.SEVERE, null, e);
             }
@@ -74,6 +75,7 @@ public class UsuarioDAOImpl implements UsuarioDAO {
             Logger.getLogger(UsuarioDAOImpl.class.getName()).log(Level.SEVERE, null, e1);
         }finally {
             try {
+                assert con != null;
                 con.close();
             } catch (SQLException e1) {
                 Logger.getLogger(UsuarioDAOImpl.class.getName()).log(Level.SEVERE, null, e1);
@@ -88,7 +90,7 @@ public class UsuarioDAOImpl implements UsuarioDAO {
 
         try {
             con = DBService.getInstancia().connection();
-            String sql = "delete from PUBLIC.USUARIO u where u.id=?";
+            String sql = "delete from PUBLIC.USUARIO where id=?";
             PreparedStatement preparedStatement = con.prepareStatement(sql);
             preparedStatement.setLong(1, e.getId());
 
@@ -99,6 +101,7 @@ public class UsuarioDAOImpl implements UsuarioDAO {
 
         }finally {
             try {
+                assert con != null;
                 con.close();
             } catch (SQLException e1) {
                 Logger.getLogger(UsuarioDAOImpl.class.getName()).log(Level.SEVERE, null, e1);
@@ -136,7 +139,8 @@ public class UsuarioDAOImpl implements UsuarioDAO {
 
         }finally{
             try {
-				con.close();
+                assert con != null;
+                con.close();
 			} catch (SQLException e) {
                 Logger.getLogger(UsuarioDAOImpl.class.getName()).log(Level.SEVERE, null, e);
 
@@ -177,6 +181,7 @@ public class UsuarioDAOImpl implements UsuarioDAO {
 
         }finally {
             try {
+                assert con != null;
                 con.close();
             } catch (SQLException e) {
                 Logger.getLogger(UsuarioDAOImpl.class.getName()).log(Level.SEVERE, null, e);
@@ -189,7 +194,7 @@ public class UsuarioDAOImpl implements UsuarioDAO {
     @Override
     public Usuario validateLogIn(String user, String pass) {
 
-        boolean ok =false;
+
         Usuario usuario = null;
 
         Connection con = null;
@@ -223,6 +228,7 @@ public class UsuarioDAOImpl implements UsuarioDAO {
             Logger.getLogger(UsuarioDAOImpl.class.getName()).log(Level.SEVERE, null, ex);
         } finally{
             try {
+                assert con != null;
                 con.close();
             } catch (SQLException ex) {
                 Logger.getLogger(UsuarioDAOImpl.class.getName()).log(Level.SEVERE, null, ex);

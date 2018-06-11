@@ -18,17 +18,15 @@ import spark.template.freemarker.FreeMarkerEngine;
 
 import java.util.*;
 import java.sql.SQLException;
-import java.time.LocalDate;
 
 import static spark.Spark.*;
 
 public class Main {
 
-    static Usuario usuario;
+    private static Usuario usuario;
     static final String iv = "0123456789123456"; // This has to be 16 characters
     static final String secretKeyUSer = "qwerty987654321";
     static final String secretKeyContra = "123456789klk";
-
     public static void main(String[] args) throws SQLException {
 
         BootStrapService.startDb();
@@ -111,6 +109,7 @@ public class Main {
             Articulo articulo2 = articuloService.getById(Integer.parseInt(idArticulo));
             attributes.put("articulo", articulo2);
             attributes.put("comentarios", comentarioService.getByArticulo(Integer.parseInt(idArticulo)));
+            attributes.put("etiquetas", etiquetaService.getByArticulo(Integer.parseInt(idArticulo)));
 
             return new ModelAndView(attributes, "post.ftl");
         }, freeMarkerEngine);
@@ -134,7 +133,26 @@ public class Main {
         });
 
         get("/agregarPost", (request, response) -> configuration.getTemplate("agregarPost.ftl"));
+        get("/editarPost/:id", (request, response) -> {
+            Map<String, Object> attributes = new HashMap<>();
+            String idArticulo = request.params("id");
 
+            Articulo editar = articuloService.getById(Integer.parseInt(idArticulo));
+            attributes.put("articulo", editar);
+            List<Etiqueta> tags = etiquetaService.getByArticulo(Integer.parseInt(idArticulo));
+            StringBuilder res = new StringBuilder();
+            for(int i = 0; i<tags.size(); i++){
+                if(i==tags.size()-1){
+                    res.append(tags.get(i).getEtiqueta());
+                }else{
+                    res.append(tags.get(i).getEtiqueta()).append(",");
+                }
+            }
+            String ResultingTagString = String.valueOf(res);
+            attributes.put("etiquetas", ResultingTagString);
+
+            return new ModelAndView(attributes, "editarPost.ftl");
+        }, freeMarkerEngine);
 
         post("/guardarPost", (request, response) -> {
             Usuario autor = usuarioService.getById(2L);
@@ -194,10 +212,48 @@ public class Main {
                 response.redirect("/inicio");
             }
 
+
+
+            return "";
+        });
+
+        post("/editarPost/:id", (request, response) -> {
+            Usuario autor = usuarioService.getById(2L);
+            String idArticulo = request.params("id");
+            Long articleid = Long.parseLong(idArticulo);
+            String titulo = request.queryParams("titulo");
+            String cuerpo = request.queryParams("cuerpo");
+            long now = System.currentTimeMillis();
+            java.sql.Date nowsql = new java.sql.Date(now);
+            Articulo art = new Articulo(articleid, titulo, cuerpo, autor, nowsql);
+            articuloService.update(art);
+            String tags = request.queryParams("etiquetas");
+
+            String[] tagArray = tags.split(",");
+
+            List<Etiqueta> l = etiquetaService.getByArticulo(articleid);
+
+            for (String aTagArray : tagArray) {
+                boolean exists = false;
+                for (Etiqueta e : l) {
+                    if (aTagArray.equalsIgnoreCase(e.getEtiqueta())) {
+                        exists = true;
+                    }
+                }
+                if (!exists) {
+                    etiquetaService.insert(new Etiqueta(aTagArray, art));
+                }
+            }
+
+            response.redirect("/verMas/"+idArticulo);
             return "";
         });
 
 
+
+
+
+    }
 
 
     }

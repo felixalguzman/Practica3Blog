@@ -33,6 +33,14 @@ public class Articulo {
         this.fecha = fecha;
     }
 
+    public Articulo(long id, String titulo, String cuerpo, Usuario autor, Date fecha) {
+        this.id = id;
+        this.titulo = titulo;
+        this.cuerpo = cuerpo;
+        this.autor = autor;
+        this.fecha = fecha;
+    }
+
     public long getId() {
         return id;
     }
