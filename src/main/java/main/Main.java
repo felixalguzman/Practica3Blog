@@ -40,11 +40,6 @@ public class Main {
         EtiquetaService etiquetaService = new EtiquetaService();
         ComentarioService comentarioService = new ComentarioService();
 
-
-
-
-
-
         staticFiles.location("/templates");
 
         Configuration configuration = new Configuration(new Version(2, 3, 0));
@@ -60,14 +55,12 @@ public class Main {
             String[] llaveValor = new String[2];
             request.cookie("login");
             for (String key: cookies.keySet()) {
-//                System.out.println("llave: " + key + " valor: " + cookies.get(key));
+                 System.out.println("llave: " + key + " valor: " + cookies.get(key));
                  llaveValor = cookies.get(key).split(",");
 
             }
 
-
             if (llaveValor[0] != null){
-
                 Crypto crypto = new Crypto();
 
                 System.out.println(llaveValor[0] + " contra: " + llaveValor[1]);
@@ -75,19 +68,12 @@ public class Main {
                 String contra = crypto.decrypt(llaveValor[1], iv, secretKeyContra);
 
                 Usuario usuario1 = usuarioService.validateLogIn(user, contra);
-                if (usuario1 != null)
-                {
+                if (usuario1 != null) {
                     usuario = usuario1;
                     response.redirect("/inicio");
                     return  modelAndView(attributes, "inicio.ftl");
                 }
-
-
-
             }
-
-
-
             return new ModelAndView(attributes, "login.ftl");
         }, freeMarkerEngine);
 
@@ -192,10 +178,8 @@ public class Main {
 
             Usuario usuario1 = usuarioService.validateLogIn(user, contra);
 
-            if (usuario1 != null)
-            {
-                if( recordar!= null && recordar.equalsIgnoreCase("on"))
-                {
+            if (usuario1 != null) {
+                if( recordar!= null && recordar.equalsIgnoreCase("on")) {
 
 
                     Crypto crypto = new Crypto();
@@ -211,9 +195,6 @@ public class Main {
                 usuario = usuario1;
                 response.redirect("/inicio");
             }
-
-
-
             return "";
         });
 
@@ -244,17 +225,9 @@ public class Main {
                     etiquetaService.insert(new Etiqueta(aTagArray, art));
                 }
             }
-
             response.redirect("/verMas/"+idArticulo);
             return "";
         });
-
-
-
-
-
     }
-
-
-    }
+}
 
