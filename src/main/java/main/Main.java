@@ -199,7 +199,7 @@ public class Main {
         });
 
         post("/editarPost/:id", (request, response) -> {
-            Usuario autor = usuarioService.getById(2L);
+            Usuario autor = usuario;
             String idArticulo = request.params("id");
             Long articleid = Long.parseLong(idArticulo);
             String titulo = request.queryParams("titulo");
@@ -228,6 +228,10 @@ public class Main {
             response.redirect("/verMas/"+idArticulo);
             return "";
         });
+
+        get("/agregarUsuario", (request, response) -> configuration.getTemplate("agregarUsuario.ftl"));
+
+
     }
 }
 

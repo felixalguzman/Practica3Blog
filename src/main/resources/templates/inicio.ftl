@@ -39,6 +39,10 @@
                     <li class="nav-item">
                         <a class="nav-link" href="/agregarPost">Agregar Post</a>
                     </li>
+
+                    <li class="nav-item">
+                        <a class="nav-link" href="/agregarUsuario">Agregar Usuario</a>
+                    </li>
                 </ul>
             </div>
         </div>
@@ -172,6 +176,9 @@
     <!-- Bootstrap core JavaScript -->
     <script src="../vendor/jquery/jquery.min.js"></script>
     <script src="../vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
+    <script src="../vendor/bootstrap/js/jquery.min.js"></script>
+    <script src="../vendor/bootstrap/js/bootstrap.min.js"></script>
+    <script src="../vendor/bootstrap/js/my-login.js"></script>
 
     </body>
 
