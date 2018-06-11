@@ -22,30 +22,20 @@ import static spark.Spark.*;
 
 public class Main {
 
+    static Usuario usuario;
     public static void main(String[] args) throws SQLException {
 
         BootStrapService.startDb();
 
         BootStrapService.crearTablas();
         
-        Usuario usuario = new Usuario(2l, "admin", "juan", "1234", false, true);
 
 
         UsuarioService usuarioService = new UsuarioService();
-//        usuarioService.insert(usuario);
-        //usuarioService.delete(usuario);
-        //usuarioService.update(usuario);
-
-//        Usuario usuario = usuarioService.getById(1L);
-//        System.out.println(usuario.getNombre());
-
         ArticuloService  articuloService = new ArticuloService();
-//        articuloService.insert(articulo);
-
         EtiquetaService etiquetaService = new EtiquetaService();
-//        etiquetaService.insert(etiqueta);
-
         ComentarioService comentarioService = new ComentarioService();
+
 
 
 
@@ -59,12 +49,12 @@ public class Main {
         FreeMarkerEngine freeMarkerEngine = new FreeMarkerEngine(configuration);
 
 
-//        get("/", (request, response) -> {
-//            Map<String, Object> attributes = new HashMap<>();
-//            return new ModelAndView(attributes, "login.ftl");
-//        }, freeMarkerEngine);
-
         get("/", (request, response) -> {
+            Map<String, Object> attributes = new HashMap<>();
+            return new ModelAndView(attributes, "login.ftl");
+        }, freeMarkerEngine);
+
+        get("/inicio", (request, response) -> {
             Map<String, Object> attributes = new HashMap<>();
             attributes.put("titulo", "Inicio");
 
@@ -132,6 +122,25 @@ public class Main {
             return "";
         });
 
+        post("/iniciarSesion", (request, response) -> {
+
+            String user = request.queryParams("usuario");
+            String contra = request.queryParams("password");
+
+            System.out.println(user + " pass : " + contra);
+
+            Usuario usuario1 = usuarioService.validateLogIn(user, contra);
+
+            if (usuario1 != null)
+            {
+                usuario = usuario1;
+                response.redirect("/inicio");
+            }
+
+
+
+            return "";
+        });
 
 
 

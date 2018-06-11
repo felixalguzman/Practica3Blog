@@ -38,4 +38,9 @@ public class UsuarioService implements UsuarioDAO {
     public Usuario getById(long id) {
         return usuarioDAO.getById(id);
     }
+
+    @Override
+    public Usuario validateLogIn(String user, String pass) {
+        return usuarioDAO.validateLogIn(user, pass);
+    }
 }

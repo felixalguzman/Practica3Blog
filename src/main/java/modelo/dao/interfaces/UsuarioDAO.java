@@ -15,4 +15,6 @@ public interface UsuarioDAO {
     List<Usuario> getAll();
 
     Usuario getById(long id);
+
+    Usuario validateLogIn(String user, String pass);
 }

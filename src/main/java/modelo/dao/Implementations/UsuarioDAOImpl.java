@@ -185,4 +185,52 @@ public class UsuarioDAOImpl implements UsuarioDAO {
         }
         return usuario;
     }
+
+    @Override
+    public Usuario validateLogIn(String user, String pass) {
+
+        boolean ok =false;
+        Usuario usuario = null;
+
+        Connection con = null;
+        try {
+
+            String query = "SELECT * FROM USUARIO u WHERE u.USERNAME = ? AND u.PASS = ?";
+            con = DBService.getInstancia().connection();
+            //
+            PreparedStatement prepareStatement = con.prepareStatement(query);
+            //Antes de ejecutar seteo los parametros.
+            prepareStatement.setString(1, user);
+            prepareStatement.setString(2, pass);
+
+            ResultSet resultSet = prepareStatement.executeQuery();
+
+
+            while (resultSet.next()){
+
+                usuario = new Usuario();
+                usuario.setId(resultSet.getLong("id"));
+                usuario.setNombre(resultSet.getString("nombre"));
+                usuario.setUsername(resultSet.getString("username"));
+                usuario.setPassword(resultSet.getString("pass"));
+                usuario.setAdministrator(resultSet.getBoolean("administrador"));
+                usuario.setAutor(resultSet.getBoolean("autor"));
+            }
+
+
+
+        } catch (SQLException ex) {
+            Logger.getLogger(UsuarioDAOImpl.class.getName()).log(Level.SEVERE, null, ex);
+        } finally{
+            try {
+                con.close();
+            } catch (SQLException ex) {
+                Logger.getLogger(UsuarioDAOImpl.class.getName()).log(Level.SEVERE, null, ex);
+            }
+        }
+
+        return usuario;
+    }
+
+
 }
