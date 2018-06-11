@@ -106,7 +106,7 @@
             <h5 class="card-header">Etiquetas</h5>
             <ul>
                 <#list etiquetas as etiqueta>
-                    <li>${etiqueta.etiqueta}</li>
+                    <li><span class="badge badge-primary">${etiqueta.etiqueta}</span></li>
                 </#list>
             </ul>
           </div>
