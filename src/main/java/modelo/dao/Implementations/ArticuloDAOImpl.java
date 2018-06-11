@@ -1,7 +1,6 @@
 package modelo.dao.Implementations;
 
 import encapsulacion.Articulo;
-import encapsulacion.Etiqueta;
 import encapsulacion.Usuario;
 import modelo.dao.interfaces.ArticuloDAO;
 import modelo.servicios.EntityServices.EtiquetaService;

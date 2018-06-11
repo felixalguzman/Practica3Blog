@@ -16,7 +16,6 @@ import spark.template.freemarker.FreeMarkerEngine;
 
 import java.util.*;
 import java.sql.SQLException;
-import java.time.LocalDate;
 
 import static spark.Spark.*;
 
@@ -72,6 +71,7 @@ public class Main {
             Articulo articulo2 = articuloService.getById(Integer.parseInt(idArticulo));
             attributes.put("articulo", articulo2);
             attributes.put("comentarios", comentarioService.getByArticulo(Integer.parseInt(idArticulo)));
+            attributes.put("etiquetas", etiquetaService.getByArticulo(Integer.parseInt(idArticulo)));
 
             return new ModelAndView(attributes, "post.ftl");
         }, freeMarkerEngine);
