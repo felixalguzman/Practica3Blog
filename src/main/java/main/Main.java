@@ -11,6 +11,8 @@ import modelo.servicios.EntityServices.ComentarioService;
 import modelo.servicios.EntityServices.EtiquetaService;
 import modelo.servicios.EntityServices.UsuarioService;
 import modelo.servicios.Utils.BootStrapService;
+import modelo.servicios.Utils.Crypto;
+import org.jasypt.util.text.StrongTextEncryptor;
 import spark.ModelAndView;
 import spark.template.freemarker.FreeMarkerEngine;
 
@@ -23,6 +25,10 @@ import static spark.Spark.*;
 public class Main {
 
     static Usuario usuario;
+    static final String iv = "0123456789123456"; // This has to be 16 characters
+    static final String secretKeyUSer = "qwerty987654321";
+    static final String secretKeyContra = "123456789klk";
+
     public static void main(String[] args) throws SQLException {
 
         BootStrapService.startDb();
@@ -51,6 +57,39 @@ public class Main {
 
         get("/", (request, response) -> {
             Map<String, Object> attributes = new HashMap<>();
+            Map<String, String> cookies = request.cookies();
+
+            String[] llaveValor = new String[2];
+            request.cookie("login");
+            for (String key: cookies.keySet()) {
+//                System.out.println("llave: " + key + " valor: " + cookies.get(key));
+                 llaveValor = cookies.get(key).split(",");
+
+            }
+
+
+            if (llaveValor[0] != null){
+
+                Crypto crypto = new Crypto();
+
+                System.out.println(llaveValor[0] + " contra: " + llaveValor[1]);
+                String user = crypto.decrypt(llaveValor[0], iv, secretKeyUSer);
+                String contra = crypto.decrypt(llaveValor[1], iv, secretKeyContra);
+
+                Usuario usuario1 = usuarioService.validateLogIn(user, contra);
+                if (usuario1 != null)
+                {
+                    usuario = usuario1;
+                    response.redirect("/inicio");
+                    return  modelAndView(attributes, "inicio.ftl");
+                }
+
+
+
+            }
+
+
+
             return new ModelAndView(attributes, "login.ftl");
         }, freeMarkerEngine);
 
@@ -126,6 +165,10 @@ public class Main {
 
             String user = request.queryParams("usuario");
             String contra = request.queryParams("password");
+            String recordar = request.queryParams("remember");
+
+            System.out.println(recordar);
+
 
             System.out.println(user + " pass : " + contra);
 
@@ -133,14 +176,27 @@ public class Main {
 
             if (usuario1 != null)
             {
+                if( recordar!= null && recordar.equalsIgnoreCase("on"))
+                {
+
+
+                    Crypto crypto = new Crypto();
+                    String userEncrypt = crypto.encrypt(user, iv, secretKeyUSer);
+                    String contraEncrypt = crypto.encrypt(contra, iv, secretKeyContra);
+
+//                final String decryptedData = crypto.decrypt(encryptedData, iv, secretKey);
+
+                    System.out.println("user encryp: " + userEncrypt + " contra encryp: " + contraEncrypt);
+
+                    response.cookie("/", "login", userEncrypt + "," + contraEncrypt, 604800, true); //incluyendo el path del cookie.
+                }
                 usuario = usuario1;
                 response.redirect("/inicio");
             }
 
-
-
             return "";
         });
+
 
 
 

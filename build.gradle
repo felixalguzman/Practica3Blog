@@ -16,4 +16,8 @@ dependencies {
     compile group: 'org.sql2o', name: 'sql2o', version: '1.5.4'
     compile group: 'org.slf4j',name: 'slf4j-simple', version: '1.7.21'
     testCompile group: 'junit', name: 'junit', version: '4.12'
+
+// https://mvnrepository.com/artifact/org.jasypt/jasypt
+    compile group: 'org.jasypt', name: 'jasypt', version: '1.9.2'
+
 }

@@ -24,7 +24,7 @@ public class ComentarioDAOImpl implements ComentarioDAO {
         try	{
 
             con = DBService.getInstancia().connection();
-            String sql = "Insert into PUBLIC.COMENTARIO(id, COMENTARIO, AUTOR, ARTICULO) values(NEXTVAL('SECUENCIA_COMENTARIO') , ?, ?, ?); ";
+            String sql = "Insert into PUBLIC.COMENTARIO(id, COMENTARIO, AUTOR, ARTICULO) values(SECUENCIA_COMENTARIO.nextval, ?, ?, ?); ";
             PreparedStatement preparedStatement = con.prepareStatement(sql);
 
 //            preparedStatement.setLong(1, e.getId());

@@ -1,6 +1,8 @@
 package modelo.servicios.Utils;
 
 
+import encapsulacion.Usuario;
+import modelo.servicios.EntityServices.UsuarioService;
 import org.h2.tools.Server;
 
 import java.sql.Connection;
@@ -59,6 +61,9 @@ public class BootStrapService {
                 "FOREIGN KEY (AUTOR) REFERENCES USUARIO(ID)" +
                 ");";
 
+
+
+        String admin = "INSERT INTO USUARIO VALUES (SECUENCIA_USUARIO.nextval, 'admin', 'admin', 'admin',"+true+", "+true+")";
         String secuenciaUsuario = "CREATE SEQUENCE IF NOT EXISTS SECUENCIA_USUARIO START WITH 0 INCREMENT BY 1";
         String secuenciaArticulo = "CREATE SEQUENCE IF NOT EXISTS SECUENCIA_ARTICULO START WITH 0 INCREMENT BY 1";
         String secuenciaEtiqueta= "CREATE SEQUENCE IF NOT EXISTS SECUENCIA_ETIQUETA START WITH 0 INCREMENT BY 1";
@@ -78,6 +83,15 @@ public class BootStrapService {
         statement.execute(secuenciaArticulo);
         statement.execute(secuenciaEtiqueta);
         statement.execute(secuenciaComentario);
+
+        UsuarioService usuarioService = new UsuarioService();
+        Usuario usuario = usuarioService.validateLogIn("admin", "admin");
+
+        if (usuario == null){
+            statement.execute(admin);
+        }
+
+
 
         statement.close();
         connection.close();

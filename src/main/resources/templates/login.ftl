@@ -24,22 +24,24 @@
                             <h4 class="card-title">Login</h4>
                             <form method="POST" action="/iniciarSesion">
 
+                                <#assign x="">
                                 <div class="form-group">
                                     <label for="email">Usuario</label>
 
-                                    <input id="email" type="text" class="form-control" name="usuario" value="" required autofocus>
+                                    <input id="email" type="text" class="form-control" name="usuario"  required autofocus value=${user!x}>
                                 </div>
 
                                 <div class="form-group">
                                     <label for="password">Password
 
                                     </label>
-                                    <input id="password" type="password" class="form-control" name="password" required data-eye>
+                                    <input id="password" type="password" class="form-control" name="password" required data-eye value=${pass!x}>
                                 </div>
 
                                 <div class="form-group">
                                     <label>
-                                        <input type="checkbox" name="remember"> Remember Me
+
+                                        <input type="checkbox"  id="remember" name="remember"> Remember me
                                     </label>
                                 </div>
 
