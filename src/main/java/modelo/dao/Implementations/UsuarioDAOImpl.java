@@ -24,15 +24,15 @@ public class UsuarioDAOImpl implements UsuarioDAO {
     try	{
 
         con = DBService.getInstancia().connection();
-        String sql = "Insert into PUBLIC.USUARIO (id, username, nombre, pass, administrador, autor) values(?, ?, ?, ?, ?, ?); ";
+        String sql = "Insert into PUBLIC.USUARIO (id, username, nombre, pass, administrador, autor) values(NEXTVAL('SECUENCIA_USUARIO'), ?, ?, ?, ?, ?); ";
         PreparedStatement preparedStatement = con.prepareStatement(sql);
 
-        preparedStatement.setLong(1, e.getId());
-        preparedStatement.setString(2, e.getUsername());
-        preparedStatement.setString(3, e.getNombre());
-        preparedStatement.setString(4, e.getPassword());
-        preparedStatement.setBoolean(5, e.getAdministrator());
-        preparedStatement.setBoolean(6, e.getAutor());
+//        preparedStatement.setLong(1, e.getId());
+        preparedStatement.setString(1, e.getUsername());
+        preparedStatement.setString(2, e.getNombre());
+        preparedStatement.setString(3, e.getPassword());
+        preparedStatement.setBoolean(4, e.getAdministrator());
+        preparedStatement.setBoolean(5, e.getAutor());
 
 
         preparedStatement.execute();

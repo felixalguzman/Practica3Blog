@@ -7,7 +7,7 @@ import modelo.dao.Implementations.ComentarioDAOImpl;
 import java.util.List;
 
 public class ComentarioService implements ComentarioDAO {
-    public ComentarioDAOImpl comentarioDAO;
+    private ComentarioDAOImpl comentarioDAO;
 
     public ComentarioService() {
         comentarioDAO = new ComentarioDAOImpl();

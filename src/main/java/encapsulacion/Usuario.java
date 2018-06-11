@@ -21,6 +21,14 @@ public class Usuario {
         this.setAutor(autor);
     }
 
+    public Usuario(String username, String nombre, String password, Boolean administrator, Boolean autor) {
+        this.username = username;
+        this.nombre = nombre;
+        this.password = password;
+        this.administrator = administrator;
+        this.autor = autor;
+    }
+
     public long getId() {
         return id;
     }

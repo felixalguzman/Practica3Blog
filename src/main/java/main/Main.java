@@ -12,7 +12,7 @@ import modelo.servicios.EntityServices.EtiquetaService;
 import modelo.servicios.EntityServices.UsuarioService;
 import modelo.servicios.Utils.BootStrapService;
 import modelo.servicios.Utils.Crypto;
-import org.jasypt.util.text.StrongTextEncryptor;
+//import org.jasypt.util.text.StrongTextEncryptor;
 import spark.ModelAndView;
 import spark.template.freemarker.FreeMarkerEngine;
 
@@ -231,6 +231,17 @@ public class Main {
 
         get("/agregarUsuario", (request, response) -> configuration.getTemplate("agregarUsuario.ftl"));
 
+        post("/guardarUsuario", (request, response) -> {
+            String username = request.queryParams("username");
+            String nombre = request.queryParams("nombre");
+            String pass = request.queryParams("password");
+            String autor = request.queryParams("autor2");
+            String admin = request.queryParams("admin2");
+            Usuario u = new Usuario(username, nombre, pass, admin.equalsIgnoreCase("on"), autor.equalsIgnoreCase("on"));
+            usuarioService.insert(u);
+            response.redirect("/");
+            return "";
+        });
 
     }
 }

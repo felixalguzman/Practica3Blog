@@ -7,7 +7,7 @@ import modelo.dao.Implementations.EtiquetaDAOImpl;
 import java.util.List;
 
 public class EtiquetaService implements EtiquetaDAO {
-    public EtiquetaDAOImpl etiquetaDAO;
+    private EtiquetaDAOImpl etiquetaDAO;
 
     public EtiquetaService() {
         etiquetaDAO = new EtiquetaDAOImpl();

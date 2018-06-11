@@ -7,7 +7,7 @@ import modelo.dao.Implementations.ArticuloDAOImpl;
 import java.util.List;
 
 public class ArticuloService implements ArticuloDAO {
-    public ArticuloDAOImpl articuloDAO;
+    private ArticuloDAOImpl articuloDAO;
 
     public ArticuloService(){
         articuloDAO = new ArticuloDAOImpl();

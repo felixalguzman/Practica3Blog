@@ -71,6 +71,7 @@ public class ArticuloDAOImpl implements ArticuloDAO {
             Logger.getLogger(ArticuloDAOImpl.class.getName()).log(Level.SEVERE, null, e1);
         }finally {
             try {
+                assert con != null;
                 con.close();
             } catch (SQLException e1) {
                 Logger.getLogger(ArticuloDAOImpl.class.getName()).log(Level.SEVERE, null, e1);
@@ -99,6 +100,7 @@ public class ArticuloDAOImpl implements ArticuloDAO {
             Logger.getLogger(ArticuloDAOImpl.class.getName()).log(Level.SEVERE, null, e1);
         }finally {
             try{
+                assert con != null;
                 con.close();
             }catch (SQLException e1){
                 Logger.getLogger(ArticuloDAOImpl.class.getName()).log(Level.SEVERE, null, e1);
@@ -124,6 +126,7 @@ public class ArticuloDAOImpl implements ArticuloDAO {
 
         }finally {
             try {
+                assert con != null;
                 con.close();
             } catch (SQLException e1) {
                 Logger.getLogger(ArticuloDAOImpl.class.getName()).log(Level.SEVERE, null, e1);
@@ -162,6 +165,7 @@ public class ArticuloDAOImpl implements ArticuloDAO {
             Logger.getLogger(ArticuloDAOImpl.class.getName()).log(Level.SEVERE, null, e);
         }finally{
             try {
+                assert con != null;
                 con.close();
             } catch (SQLException e) {
                 Logger.getLogger(ArticuloDAOImpl.class.getName()).log(Level.SEVERE, null, e);
@@ -209,6 +213,7 @@ public class ArticuloDAOImpl implements ArticuloDAO {
 
         }finally {
             try {
+                assert con != null;
                 con.close();
             } catch (SQLException e) {
                 Logger.getLogger(ArticuloDAOImpl.class.getName()).log(Level.SEVERE, null, e);
