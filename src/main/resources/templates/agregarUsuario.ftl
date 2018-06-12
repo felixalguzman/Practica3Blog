@@ -50,42 +50,44 @@
 
             <div class="lead">
               <!-- Title -->
-             <form method="post" action="/guardarUsuario">
+             <form method="post" action="/guardarUsuario" style="width: 500px">
 
                  <div class="form-group">
                      <h1 class="mt-4">Agregar Usuario</h1>
 
                    <label>Nombre de usuario</label>
-                     <input type="text" class="form-control" placeholder="Username" aria-label="Username" name="usuario" required>
+                     <input type="text" class="form-control" placeholder="username" aria-label="Username" name="usuario" required>
                  </div>
 
                  <div class="form-group">
                      <label>Nombre</label>
-                     <input type="text" class="form-control" rows="3" placeholder="Juan Pere" name="nombre" required>
+                     <input type="text" class="form-control" rows="3" placeholder="John Doe" name="nombre" required>
                  </div>
 
                  <div class="form-group">
                      <label>Password</label>
                      <input type="password" id="password" class="form-control" rows="3" name="pass" required data-eye>
                  </div>
+                <div class="form-group">
+                    <label class="switch"> 
+                        <label >
+                            <input type="checkbox" name="admin">  Administrador
+                            <span class="slider round"></span>
+                        </label>
+                    </label>
+                    <label class="switch">
+                        <label >
+                            <input  type="checkbox" name="autor">   Autor
+                            <span class="slider round"></span>
+                        </label>
+                    </label>
+                </div>
 
-                 <label class="switch">
+                <div class="form-group">
 
-                     <label >
-                         <input type="checkbox" name="admin">   Administrador
-                         <span class="slider round"></span>
-                     </label>
-                 </label>
+                </div>
+
                  <hr>
-
-                 <label class="switch">
-
-                     <label >
-                         <input  type="checkbox" name="autor">
-                         <span class="slider round"></span>
-                         <label style="display: inline-block;text-align: right">Autor</label>
-                     </label>
-                 </label>
 
                  <button style="float: right" type="submit" class="btn btn-primary">Guardar</button>
              </form>

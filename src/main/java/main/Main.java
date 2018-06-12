@@ -232,12 +232,12 @@ public class Main {
         get("/agregarUsuario", (request, response) -> configuration.getTemplate("agregarUsuario.ftl"));
 
         post("/guardarUsuario", (request, response) -> {
-            String username = request.queryParams("username");
+            String username = request.queryParams("usuario");
             String nombre = request.queryParams("nombre");
-            String pass = request.queryParams("password");
-            String autor = request.queryParams("autor2");
-            String admin = request.queryParams("admin2");
-            Usuario u = new Usuario(username, nombre, pass, admin.equalsIgnoreCase("on"), autor.equalsIgnoreCase("on"));
+            String pass = request.queryParams("pass");
+            String autor = request.queryParams("autor");
+            String admin = request.queryParams("admin");
+            Usuario u = new Usuario(username, nombre, pass, admin != null, autor!=null);
             usuarioService.insert(u);
             response.redirect("/");
             return "";
