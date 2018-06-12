@@ -178,6 +178,50 @@ public class ArticuloDAOImpl implements ArticuloDAO {
     }
 
     @Override
+    public List<Articulo> getbyAutor(long id) {
+        List<Articulo> list = new ArrayList<>();
+        Connection con = null;
+
+        try {
+            String sql = "select * from PUBLIC.ARTICULO WHERE AUTOR = ? ORDER BY FECHA DESC  ";
+            con = DBService.getInstancia().connection();
+
+            PreparedStatement preparedStatement = con.prepareStatement(sql);
+            preparedStatement.setLong(1, id);
+            ResultSet resultSet = preparedStatement.executeQuery();
+
+            while (resultSet.next()) {
+
+                Articulo articulo = new Articulo();
+                articulo.setId(resultSet.getLong("id"));
+                articulo.setTitulo(resultSet.getString("Titulo"));
+                articulo.setCuerpo(resultSet.getString("Cuerpo"));
+
+                UsuarioService usuarioService = new UsuarioService();
+                Usuario usuario = usuarioService.getById(resultSet.getLong("autor"));
+                articulo.setAutor(usuario);
+                articulo.setFecha(resultSet.getDate("fecha"));
+
+
+                list.add(articulo);
+            }
+        } catch (Exception e) {
+            Logger.getLogger(ArticuloDAOImpl.class.getName()).log(Level.SEVERE, null, e);
+        }finally{
+            try {
+                con.close();
+            } catch (SQLException e) {
+                Logger.getLogger(ArticuloDAOImpl.class.getName()).log(Level.SEVERE, null, e);
+
+            }
+        }
+
+
+        return list;
+    }
+
+
+    @Override
     public Articulo getById(long id) {
 
         Connection con = null;
@@ -222,4 +266,6 @@ public class ArticuloDAOImpl implements ArticuloDAO {
         }
         return articulo;
     }
+
+
 }

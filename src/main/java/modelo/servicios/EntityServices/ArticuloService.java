@@ -42,4 +42,10 @@ public class ArticuloService implements ArticuloDAO {
     public Articulo getById(long id) {
         return articuloDAO.getById(id);
     }
+
+    @Override
+    public List<Articulo> getbyAutor(long id) {
+        return articuloDAO.getbyAutor(id);
+    }
+
 }

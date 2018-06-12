@@ -16,5 +16,8 @@ public interface ArticuloDAO {
 
     List<Articulo> getAll();
 
+    List<Articulo> getbyAutor(long id);
+
+
     Articulo getById(long id);
 }

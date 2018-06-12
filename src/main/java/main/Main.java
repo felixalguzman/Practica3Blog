@@ -12,6 +12,7 @@ import modelo.servicios.EntityServices.EtiquetaService;
 import modelo.servicios.EntityServices.UsuarioService;
 import modelo.servicios.Utils.BootStrapService;
 import modelo.servicios.Utils.Crypto;
+import modelo.servicios.Utils.Filtros;
 //import org.jasypt.util.text.StrongTextEncryptor;
 import spark.ModelAndView;
 import spark.template.freemarker.FreeMarkerEngine;
@@ -23,7 +24,7 @@ import static spark.Spark.*;
 
 public class Main {
 
-    private static Usuario usuario;
+    public static Usuario usuario;
     static final String iv = "0123456789123456"; // This has to be 16 characters
     static final String secretKeyUSer = "qwerty987654321";
     static final String secretKeyContra = "123456789klk";
@@ -60,7 +61,7 @@ public class Main {
 
             }
 
-            if (llaveValor[0] != null){
+            if (llaveValor[1] != null){
                 Crypto crypto = new Crypto();
 
                 System.out.println(llaveValor[0] + " contra: " + llaveValor[1]);
@@ -70,8 +71,10 @@ public class Main {
                 Usuario usuario1 = usuarioService.validateLogIn(user, contra);
                 if (usuario1 != null) {
                     usuario = usuario1;
+//                    attributes.put("usuario", usuario);
+//                    attributes.put("titulo", "Posts");
                     response.redirect("/inicio");
-                    return  modelAndView(attributes, "inicio.ftl");
+//                    return modelAndView(attributes, "inicio.ftl");
                 }
             }
             return new ModelAndView(attributes, "login.ftl");
@@ -243,6 +246,51 @@ public class Main {
             return "";
         });
 
+
+
+        get("/logOut", (request, response) -> {
+
+            usuario = null;
+            response.removeCookie("/", "login");
+
+            return "";
+        });
+
+        get("/errorPost", (request, response) -> {
+            Map<String, Object> attributes = new HashMap<>();
+
+            attributes.put("mensaje", "Usted no tiene permisos para esta area!");
+
+            return new ModelAndView(attributes, "error.ftl");
+        }, freeMarkerEngine);
+
+        get("/verUsuarios", (request, response) -> {
+            Map<String, Object> attributes = new HashMap<>();
+
+            attributes.put("usuarios",usuarioService.getAll());
+
+            return new ModelAndView(attributes, "verUsuarios.ftl");
+        }, freeMarkerEngine);
+
+
+        get("/ver/:id", (request, response) -> {
+            String id = request.params("id");
+
+            Usuario usuario = usuarioService.getById(Integer.parseInt(id));
+
+
+            Map<String, Object> attributes = new HashMap<>();
+            attributes.put("titulo", "Posts de " + usuario.getNombre());
+            attributes.put("usuario", usuario);
+            attributes.put("etiquetas", etiquetaService.getAll());
+            attributes.put("list", articuloService.getbyAutor(usuario.getId()));
+
+            return new ModelAndView(attributes, "inicio.ftl");
+        }, freeMarkerEngine);
+
+
+
+        new Filtros().filtros();
     }
 }
 

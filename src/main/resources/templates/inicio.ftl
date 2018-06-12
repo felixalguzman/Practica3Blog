@@ -43,6 +43,15 @@
                     <li class="nav-item">
                         <a class="nav-link" href="/agregarUsuario">Agregar Usuario</a>
                     </li>
+
+                    <#--<#if (usuario.administrator!) && (usuario.administrator == true)>-->
+                         <#--<li class="nav-item">-->
+                             <#--<a class="nav-link" href="/verUsuarios">Ver Usuarios</a>-->
+                         <#--</li>-->
+                    <#--</#if>-->
+
+
+
                 </ul>
             </div>
         </div>
@@ -80,7 +89,7 @@
                   </div>
                   <div class="card-footer text-muted">
                       Publicado el ${articulo.fecha} por
-                      <a href="#">${articulo.autor.nombre}</a>
+                      <a href="/ver/${articulo.autor.id}">${articulo.autor.nombre}</a>
                   </div>
               </div>
         </#list>

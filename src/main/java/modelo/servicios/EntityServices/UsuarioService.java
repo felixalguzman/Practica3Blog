@@ -43,4 +43,6 @@ public class UsuarioService implements UsuarioDAO {
     public Usuario validateLogIn(String user, String pass) {
         return usuarioDAO.validateLogIn(user, pass);
     }
+
+
 }
