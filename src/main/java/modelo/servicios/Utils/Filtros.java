@@ -14,7 +14,7 @@ public class Filtros {
 
             System.out.println("Ruta del request antes: " + request.pathInfo());
 
-            if (request.pathInfo().equalsIgnoreCase("/agregarPost") || request.pathInfo().equalsIgnoreCase("/agregarUsuario")){
+            if (request.pathInfo().equalsIgnoreCase("/agregarPost") || request.pathInfo().equalsIgnoreCase("/agregarUsuario") || request.pathInfo().equalsIgnoreCase("/agregarComentario")){
 
                 if (Main.usuario == null  || !Main.usuario.getAdministrator()){
 

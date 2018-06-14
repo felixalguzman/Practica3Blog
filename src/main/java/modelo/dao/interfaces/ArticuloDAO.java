@@ -18,6 +18,5 @@ public interface ArticuloDAO {
 
     List<Articulo> getbyAutor(long id);
 
-
     Articulo getById(long id);
 }

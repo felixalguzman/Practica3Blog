@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html lang="en">
 
-  <head>
+<head>
 
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
@@ -15,82 +15,101 @@
 
     <!-- Custom styles for this template -->
     <link href="../css/blog-post.css" rel="stylesheet">
-      <link rel="stylesheet" type="text/css" href="../css/my-login.css">
-      <link href="../css/blog-login.css" rel="stylesheet">
-  </head>
+    <link rel="stylesheet" type="text/css" href="../css/my-login.css">
+    <link href="../css/blog-login.css" rel="stylesheet">
+</head>
 
-  <body>
+<body>
 
-    <!-- Navigation -->
-    <nav class="navbar navbar-expand-lg navbar-dark bg-dark fixed-top">
-      <div class="container">
-        <a class="navbar-brand" href="/">Inicio</a>
-        <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarResponsive" aria-controls="navbarResponsive" aria-expanded="false" aria-label="Toggle navigation">
-          <span class="navbar-toggler-icon"></span>
+<!-- Navigation -->
+<nav class="navbar navbar-expand-lg navbar-dark bg-dark fixed-top">
+    <div class="container">
+        <a class="navbar-brand" href="/inicio">Inicio</a>
+        <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarResponsive"
+                aria-controls="navbarResponsive" aria-expanded="false" aria-label="Toggle navigation">
+            <span class="navbar-toggler-icon"></span>
         </button>
         <div class="collapse navbar-collapse" id="navbarResponsive">
-          <ul class="navbar-nav ml-auto">
-            <li class="nav-item active">
-              <a class="nav-link" href="#">Home
-                <span class="sr-only">(current)</span>
-              </a>
-            </li>
-          </ul>
+            <ul class="navbar-nav ml-auto">
+                <li class="nav-item">
+                    <a class="nav-link" href="/agregarPost">Agregar Post</a>
+                </li>
+
+                <li class="nav-item">
+                    <a class="nav-link" href="/agregarUsuario">Agregar Usuario</a>
+                </li>
+
+                <#if (usuario??)>
+                     <li class="nav-item">
+                         <a class="nav-link" href="/logOut">Salir</a>
+                     </li>
+                <#else>
+                 <li class="nav-item">
+                     <a class="nav-link" href="/">Log In</a>
+                 </li>
+                </#if>
+
+
+            </ul>
         </div>
-      </div>
-    </nav>
+    </div>
+</nav>
 
-    <!-- Page Content -->
-    <div class="container">
+<!-- Page Content -->
+<div class="container">
 
-      <div class="row">
+    <div class="row">
 
         <!-- Post Content Column -->
         <div class="col-lg-8">
 
             <div class="lead">
-              <!-- Title -->
-             <form method="post" action="/guardarUsuario" style="width: 500px">
+                <!-- Title -->
+                <form method="post" action="/guardarUsuario" style="width: 500px">
 
-                 <div class="form-group">
-                     <h1 class="mt-4">Agregar Usuario</h1>
+                    <div class="form-group">
+                        <h1 class="mt-4">Agregar Usuario</h1>
 
-                   <label>Nombre de usuario</label>
-                     <input type="text" class="form-control" placeholder="username" aria-label="Username" name="usuario" required>
-                 </div>
+                        <label>Nombre de usuario</label>
+                        <input type="text" class="form-control" placeholder="username" aria-label="Username"
+                               name="usuario" required>
+                    </div>
 
-                 <div class="form-group">
-                     <label>Nombre</label>
-                     <input type="text" class="form-control" rows="3" placeholder="John Doe" name="nombre" required>
-                 </div>
+                    <div class="form-group">
+                        <label>Nombre</label>
+                        <input type="text" class="form-control" rows="3" placeholder="John Doe" name="nombre" required>
+                    </div>
 
-                 <div class="form-group">
-                     <label>Password</label>
-                     <input type="password" id="password" class="form-control" rows="3" name="pass" required data-eye>
-                 </div>
-                <div class="form-group">
-                    <label class="switch"> 
-                        <label >
-                            <input type="checkbox" name="admin">  Administrador
-                            <span class="slider round"></span>
+                    <div class="form-group">
+                        <label>Password</label>
+                        <input type="password" id="password" class="form-control" rows="3" name="pass" required
+                               data-eye>
+                    </div>
+                    <div class="form-group">
+                        <label class="switch">
+                            <label>
+                                <input type="checkbox" name="admin" style="margin-left: 10px">
+                                Administrador
+                                <span class="slider round"></span>
+                            </label>
                         </label>
-                    </label>
-                    <label class="switch">
-                        <label >
-                            <input  type="checkbox" name="autor">   Autor
-                            <span class="slider round"></span>
+                    </div>
+                    <div>
+                        <label class="switch">
+                            <label>
+                                <input type="checkbox" name="autor" style="margin-left: 10px">
+                                Autor
+                                <span class="slider round"></span>
+                            </label>
                         </label>
-                    </label>
-                </div>
+                    </div>
 
-                <div class="form-group">
 
-                </div>
 
-                 <hr>
+                    <hr>
 
-                 <button style="float: right" type="submit" class="btn btn-primary">Guardar</button>
-             </form>
+                    <button style="float: right" type="submit" class="btn btn-primary">Guardar</button>
+                </form>
             </div>
 
 
@@ -98,82 +117,83 @@
         <!-- Sidebar Widgets Column -->
         <div class="col-md-4">
 
-          <!-- Search Widget -->
-          <div class="card my-4">
-            <h5 class="card-header">Search</h5>
-            <div class="card-body">
-              <div class="input-group">
-                <input type="text" class="form-control" placeholder="Search for...">
-                <span class="input-group-btn">
+            <!-- Search Widget -->
+            <div class="card my-4">
+                <h5 class="card-header">Search</h5>
+                <div class="card-body">
+                    <div class="input-group">
+                        <input type="text" class="form-control" placeholder="Search for...">
+                        <span class="input-group-btn">
                   <button class="btn btn-secondary" type="button">Go!</button>
                 </span>
-              </div>
-            </div>
-          </div>
-
-          <!-- Categories Widget -->
-          <div class="card my-4">
-            <h5 class="card-header">Categories</h5>
-            <div class="card-body">
-              <div class="row">
-                <div class="col-lg-6">
-                  <ul class="list-unstyled mb-0">
-                    <li>
-                      <a href="#">Web Design</a>
-                    </li>
-                    <li>
-                      <a href="#">HTML</a>
-                    </li>
-                    <li>
-                      <a href="#">Freebies</a>
-                    </li>
-                  </ul>
+                    </div>
                 </div>
-                <div class="col-lg-6">
-                  <ul class="list-unstyled mb-0">
-                    <li>
-                      <a href="#">JavaScript</a>
-                    </li>
-                    <li>
-                      <a href="#">CSS</a>
-                    </li>
-                    <li>
-                      <a href="#">Tutorials</a>
-                    </li>
-                  </ul>
-                </div>
-              </div>
             </div>
-          </div>
 
-          <!-- Side Widget -->
-          <div class="card my-4">
-            <h5 class="card-header">Side Widget</h5>
-            <div class="card-body">
-              You can put anything you want inside of these side widgets. They are easy to use, and feature the new Bootstrap 4 card containers!
+            <!-- Categories Widget -->
+            <div class="card my-4">
+                <h5 class="card-header">Categories</h5>
+                <div class="card-body">
+                    <div class="row">
+                        <div class="col-lg-6">
+                            <ul class="list-unstyled mb-0">
+                                <li>
+                                    <a href="#">Web Design</a>
+                                </li>
+                                <li>
+                                    <a href="#">HTML</a>
+                                </li>
+                                <li>
+                                    <a href="#">Freebies</a>
+                                </li>
+                            </ul>
+                        </div>
+                        <div class="col-lg-6">
+                            <ul class="list-unstyled mb-0">
+                                <li>
+                                    <a href="#">JavaScript</a>
+                                </li>
+                                <li>
+                                    <a href="#">CSS</a>
+                                </li>
+                                <li>
+                                    <a href="#">Tutorials</a>
+                                </li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
             </div>
-          </div>
+
+            <!-- Side Widget -->
+            <div class="card my-4">
+                <h5 class="card-header">Side Widget</h5>
+                <div class="card-body">
+                    You can put anything you want inside of these side widgets. They are easy to use, and feature the
+                    new Bootstrap 4 card containers!
+                </div>
+            </div>
 
         </div>
 
-      </div>
-      <!-- /.row -->
+    </div>
+    <!-- /.row -->
 
+</div>
+<!-- /.container -->
+
+<!-- Footer -->
+<footer class="py-5 bg-dark">
+    <div class="container">
+        <p class="m-0 text-center text-white">Copyright &copy; Your Website 2018</p>
     </div>
     <!-- /.container -->
+</footer>
 
-    <!-- Footer -->
-    <footer class="py-5 bg-dark">
-      <div class="container">
-        <p class="m-0 text-center text-white">Copyright &copy; Your Website 2018</p>
-      </div>
-      <!-- /.container -->
-    </footer>
+<!-- Bootstrap core JavaScript -->
+<script src="../vendor/vendor/jquery/jquery.min.js"></script>
+<script src="../vendor/vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
 
-    <!-- Bootstrap core JavaScript -->
-    <script src="../vendor/vendor/jquery/jquery.min.js"></script>
-    <script src="../vendor/vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
-
-  </body>
+</body>
 
 </html>

@@ -86,6 +86,7 @@ public class Main {
 
             attributes.put("etiquetas", etiquetaService.getAll());
             attributes.put("list", articuloService.getAll());
+            attributes.put("usuario", usuario);
 
             return new ModelAndView(attributes, "inicio.ftl");
         }, freeMarkerEngine);
@@ -106,6 +107,9 @@ public class Main {
 
         post("/agregarComentario", (request, response) -> {
 
+            if(usuario == null)
+                response.redirect("/errorPost");
+
             String comentario = request.queryParams("comentario");
             String articulo = request.queryParams("articulo");
             String autor = request.queryParams("autor");
@@ -125,20 +129,38 @@ public class Main {
         get("/editarPost/:id", (request, response) -> {
             Map<String, Object> attributes = new HashMap<>();
             String idArticulo = request.params("id");
+            long articleid = Integer.parseInt(idArticulo);
 
-            Articulo editar = articuloService.getById(Integer.parseInt(idArticulo));
-            attributes.put("articulo", editar);
-            List<Etiqueta> tags = etiquetaService.getByArticulo(Integer.parseInt(idArticulo));
-            StringBuilder res = new StringBuilder();
-            for(int i = 0; i<tags.size(); i++){
-                if(i==tags.size()-1){
-                    res.append(tags.get(i).getEtiqueta());
-                }else{
-                    res.append(tags.get(i).getEtiqueta()).append(",");
-                }
+            List<Articulo> a = new ArrayList<>();
+
+            if (usuario != null  ){
+
+                a = articuloService.getbyAutor(usuario.getId());
             }
-            String ResultingTagString = String.valueOf(res);
-            attributes.put("etiquetas", ResultingTagString);
+            else {
+                response.redirect("/errorPost");
+            }
+
+            if ( articuloService.buscarPost(a,articleid) || usuario.getAdministrator()){
+
+                Articulo editar = articuloService.getById(Integer.parseInt(idArticulo));
+                attributes.put("articulo", editar);
+                List<Etiqueta> tags = etiquetaService.getByArticulo(Integer.parseInt(idArticulo));
+                StringBuilder res = new StringBuilder();
+                for(int i = 0; i<tags.size(); i++){
+                    if(i==tags.size()-1){
+                        res.append(tags.get(i).getEtiqueta());
+                    }else{
+                        res.append(tags.get(i).getEtiqueta()).append(",");
+                    }
+                }
+                String ResultingTagString = String.valueOf(res);
+                attributes.put("etiquetas", ResultingTagString);
+            }else {
+                response.redirect("/errorPost");
+            }
+
+
 
             return new ModelAndView(attributes, "editarPost.ftl");
         }, freeMarkerEngine);
@@ -202,33 +224,61 @@ public class Main {
         });
 
         post("/editarPost/:id", (request, response) -> {
-            Usuario autor = usuario;
+
+
             String idArticulo = request.params("id");
             Long articleid = Long.parseLong(idArticulo);
-            String titulo = request.queryParams("titulo");
-            String cuerpo = request.queryParams("cuerpo");
-            long now = System.currentTimeMillis();
-            java.sql.Date nowsql = new java.sql.Date(now);
-            Articulo art = new Articulo(articleid, titulo, cuerpo, autor, nowsql);
-            articuloService.update(art);
-            String tags = request.queryParams("etiquetas");
 
-            String[] tagArray = tags.split(",");
 
-            List<Etiqueta> l = etiquetaService.getByArticulo(articleid);
+                Usuario autor = usuario;
 
-            for (String aTagArray : tagArray) {
-                boolean exists = false;
-                for (Etiqueta e : l) {
-                    if (aTagArray.equalsIgnoreCase(e.getEtiqueta())) {
-                        exists = true;
+                String titulo = request.queryParams("titulo");
+                String cuerpo = request.queryParams("cuerpo");
+                long now = System.currentTimeMillis();
+                java.sql.Date nowsql = new java.sql.Date(now);
+                Articulo art = new Articulo(articleid, titulo, cuerpo, autor, nowsql);
+                articuloService.update(art);
+                String tags = request.queryParams("etiquetas");
+
+                String[] tagArray = tags.split(",");
+
+                List<Etiqueta> l = etiquetaService.getByArticulo(articleid);
+
+                for (String aTagArray : tagArray) {
+                    boolean exists = false;
+                    for (Etiqueta e : l) {
+                        if (aTagArray.equalsIgnoreCase(e.getEtiqueta())) {
+                            exists = true;
+                        }
+                    }
+                    if (!exists) {
+                        etiquetaService.insert(new Etiqueta(aTagArray, art));
                     }
                 }
-                if (!exists) {
-                    etiquetaService.insert(new Etiqueta(aTagArray, art));
-                }
+                response.redirect("/verMas/"+idArticulo);
+
+
+
+            return "";
+        });
+
+        get("/eliminarPost/:id/:articulo", (request, response) -> {
+
+            String id = request.params("id");
+            String articulo = request.params("articulo");
+
+            long idAutor= Integer.parseInt(id);
+            long idArticulo = Integer.parseInt(articulo);
+
+            if (usuario != null && (idAutor == usuario.getId() || usuario.getAdministrator()))
+            {
+                articuloService.delete(articuloService.getById(idArticulo));
+                response.redirect("/inicio");
             }
-            response.redirect("/verMas/"+idArticulo);
+            else {
+                response.redirect("/errorPost");
+            }
+
             return "";
         });
 
@@ -252,6 +302,7 @@ public class Main {
 
             usuario = null;
             response.removeCookie("/", "login");
+            response.redirect("/inicio");
 
             return "";
         });
@@ -287,6 +338,8 @@ public class Main {
 
             return new ModelAndView(attributes, "inicio.ftl");
         }, freeMarkerEngine);
+
+
 
 
 

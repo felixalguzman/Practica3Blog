@@ -48,4 +48,15 @@ public class ArticuloService implements ArticuloDAO {
         return articuloDAO.getbyAutor(id);
     }
 
+
+    public boolean buscarPost(List<Articulo> articulos, long id){
+
+        for (Articulo articulo:articulos) {
+            if (articulo.getId() == id)
+                return true;
+        }
+
+        return false;
+    }
+
 }

@@ -23,22 +23,35 @@
     <!-- Navigation -->
     <nav class="navbar navbar-expand-lg navbar-dark bg-dark fixed-top">
       <div class="container">
-        <a class="navbar-brand" href="/">Inicio</a>
-        <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarResponsive" aria-controls="navbarResponsive" aria-expanded="false" aria-label="Toggle navigation">
-          <span class="navbar-toggler-icon"></span>
-        </button>
-        <div class="collapse navbar-collapse" id="navbarResponsive">
-          <ul class="navbar-nav ml-auto">
-            <li class="nav-item active">
-              <a class="nav-link" href="#">Home
-                <span class="sr-only">(current)</span>
-              </a>
-            </li>
-            <li class="nav-item">
-              <a class="nav-link" href="/agregarPost">Agregar Post</a>
-            </li>
-          </ul>
-        </div>
+          <a class="navbar-brand" href="/inicio">Inicio</a>
+          <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarResponsive"
+                  aria-controls="navbarResponsive" aria-expanded="false" aria-label="Toggle navigation">
+              <span class="navbar-toggler-icon"></span>
+          </button>
+          <div class="collapse navbar-collapse" id="navbarResponsive">
+              <ul class="navbar-nav ml-auto">
+                  <li class="nav-item">
+                      <a class="nav-link" href="/agregarPost">Agregar Post</a>
+                  </li>
+
+                  <li class="nav-item">
+                      <a class="nav-link" href="/agregarUsuario">Agregar Usuario</a>
+                  </li>
+
+                    <#if (usuario??)>
+                         <li class="nav-item">
+                             <a class="nav-link" href="/logOut">Salir</a>
+                         </li>
+                    <#else>
+                     <li class="nav-item">
+                         <a class="nav-link" href="/">Log In</a>
+                     </li>
+                    </#if>
+
+
+
+              </ul>
+          </div>
       </div>
     </nav>
 
@@ -66,7 +79,11 @@
 
           <!-- Date/Time -->
           <p>Publicado el ${articulo.fecha}</p>
-          <a href="/editarPost/${articulo.id}" class="btn btn-primary">Editar Articulo</a>
+            <div>
+                <a href="/editarPost/${articulo.id}" class="btn btn-primary">Editar Articulo</a>
+                <a href="/eliminarPost/${articulo.autor.id}/${articulo.id}" class="btn btn-primary">Eliminar Articulo</a>
+            </div>
+
 
 
           <hr>
