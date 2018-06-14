@@ -85,23 +85,12 @@
                         <input type="password" id="password" class="form-control" rows="3" name="pass" required
                                data-eye>
                     </div>
-                    <div class="form-group">
-                        <label class="switch">
-                            <label>
-                                <input type="checkbox" name="admin" style="margin-left: 10px">
-                                Administrador
-                                <span class="slider round"></span>
-                            </label>
-                        </label>
+                    <div class="form-check-inline">
+                        <input class="toggle" type="checkbox" name="admin"> Administrador
+
                     </div>
-                    <div>
-                        <label class="switch">
-                            <label>
-                                <input type="checkbox" name="autor" style="margin-left: 10px">
-                                Autor
-                                <span class="slider round"></span>
-                            </label>
-                        </label>
+                    <div class="form-inline">
+                       <input class="toggle" style="padding: 5px" type="checkbox" name="autor"> Autor
                     </div>
 
 
