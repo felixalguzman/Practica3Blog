@@ -61,7 +61,11 @@ public class Main {
 
             }
 
-            if (llaveValor[1] != null){
+            if (request.cookie("login") != null){
+
+            }
+
+            if (llaveValor.length > 1){
                 Crypto crypto = new Crypto();
 
                 System.out.println(llaveValor[0] + " contra: " + llaveValor[1]);
@@ -166,7 +170,7 @@ public class Main {
         }, freeMarkerEngine);
 
         post("/guardarPost", (request, response) -> {
-            Usuario autor = usuarioService.getById(2L);
+            Usuario autor = usuario;
             String titulo = request.queryParams("titulo");
             String cuerpo = request.queryParams("cuerpo");
             long now = System.currentTimeMillis();
@@ -292,7 +296,7 @@ public class Main {
             String admin = request.queryParams("admin");
             Usuario u = new Usuario(username, nombre, pass, admin != null, autor!=null);
             usuarioService.insert(u);
-            response.redirect("/");
+            response.redirect("/inicio");
             return "";
         });
 

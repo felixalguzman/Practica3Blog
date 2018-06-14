@@ -69,7 +69,7 @@
           <!-- Author -->
           <p class="lead">
             Por
-            <a href="#">${articulo.autor.nombre}</a>
+            <a href="/ver/${articulo.autor.id}">${articulo.autor.nombre}</a>
           </p>
 
           <hr>
