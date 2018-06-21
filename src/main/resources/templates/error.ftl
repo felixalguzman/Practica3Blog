@@ -25,13 +25,13 @@
                     <div class="col-xs-12 ground-color text-center">
                         <div class="container-error-404">
                             <div class="clip">
-                                <div class="shadow"><span class="digit thirdDigit"></span></div>
+                                <div class="shadow">${tercero}<span class="digit thirdDigit"></span></div>
                             </div>
                             <div class="clip">
-                                <div class="shadow"><span class="digit secondDigit"></span></div>
+                                <div class="shadow"><span class="digit secondDigit">${segundo}</span></div>
                             </div>
                             <div class="clip">
-                                <div class="shadow"><span class="digit firstDigit"></span></div>
+                                <div class="shadow"><span class="digit firstDigit">${primero}</span></div>
                             </div>
                             <div class="msg">OH!<span class="triangle"></span></div>
                         </div>

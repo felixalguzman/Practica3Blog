@@ -15,6 +15,7 @@ import modelo.servicios.Utils.Crypto;
 import modelo.servicios.Utils.Filtros;
 //import org.jasypt.util.text.StrongTextEncryptor;
 import spark.ModelAndView;
+import spark.Session;
 import spark.template.freemarker.FreeMarkerEngine;
 
 import java.util.*;
@@ -75,8 +76,9 @@ public class Main {
                 Usuario usuario1 = usuarioService.validateLogIn(user, contra);
                 if (usuario1 != null) {
                     usuario = usuario1;
-//                    attributes.put("usuario", usuario);
-//                    attributes.put("titulo", "Posts");
+                    request.session(true);
+                    request.session().attribute("usuario", usuario);
+
                     response.redirect("/inicio");
 //                    return modelAndView(attributes, "inicio.ftl");
                 }
@@ -104,6 +106,7 @@ public class Main {
             attributes.put("articulo", articulo2);
             attributes.put("comentarios", comentarioService.getByArticulo(Integer.parseInt(idArticulo)));
             attributes.put("etiquetas", etiquetaService.getByArticulo(Integer.parseInt(idArticulo)));
+            attributes.put("usuario", usuario);
 
             return new ModelAndView(attributes, "post.ftl");
         }, freeMarkerEngine);
@@ -112,16 +115,16 @@ public class Main {
         post("/agregarComentario", (request, response) -> {
 
             if(usuario == null)
-                response.redirect("/errorPost");
+                response.redirect("/errorPost/401");
 
             String comentario = request.queryParams("comentario");
             String articulo = request.queryParams("articulo");
             String autor = request.queryParams("autor");
 
-            Usuario usuario1 = usuarioService.getById(Integer.parseInt(autor));
+
             Articulo articulo1 = articuloService.getById(Integer.parseInt(articulo));
 
-            comentarioService.insert(new Comentario(comentario, usuario1, articulo1));
+            comentarioService.insert(new Comentario(comentario, usuario, articulo1));
 
 
 
@@ -142,7 +145,7 @@ public class Main {
                 a = articuloService.getbyAutor(usuario.getId());
             }
             else {
-                response.redirect("/errorPost");
+                response.redirect("/errorPost/401");
             }
 
             if ( articuloService.buscarPost(a,articleid) || usuario.getAdministrator()){
@@ -161,7 +164,7 @@ public class Main {
                 String ResultingTagString = String.valueOf(res);
                 attributes.put("etiquetas", ResultingTagString);
             }else {
-                response.redirect("/errorPost");
+                response.redirect("/errorPost/401");
             }
 
 
@@ -190,7 +193,7 @@ public class Main {
             }
 
 
-            response.redirect("/");
+            response.redirect("/inicio");
             return "";
         });
 
@@ -209,7 +212,8 @@ public class Main {
             if (usuario1 != null) {
 
                 if( recordar!= null && recordar.equalsIgnoreCase("on")) {
-
+                    request.session(true);
+                    request.session().attribute("usuario", usuario1);
 
                     Crypto crypto = new Crypto();
                     String userEncrypt = crypto.encrypt(user, iv, secretKeyUSer);
@@ -222,6 +226,8 @@ public class Main {
                     response.cookie("/", "login", userEncrypt + "," + contraEncrypt, 604800, false); //incluyendo el path del cookie.
                 }
                 usuario = usuario1;
+                request.session(true);
+                request.session().attribute("usuario", usuario);
                 response.redirect("/inicio");
             }
             return "";
@@ -280,7 +286,7 @@ public class Main {
                 response.redirect("/inicio");
             }
             else {
-                response.redirect("/errorPost");
+                response.redirect("/errorPost/401");
             }
 
             return "";
@@ -305,15 +311,27 @@ public class Main {
         get("/logOut", (request, response) -> {
 
             usuario = null;
+            Session session = request.session(true);
+            session.invalidate();
             response.removeCookie("/", "login");
             response.redirect("/inicio");
 
             return "";
         });
 
-        get("/errorPost", (request, response) -> {
+        get("/errorPost/:error", (request, response) -> {
             Map<String, Object> attributes = new HashMap<>();
+            String primero, segundo, tercero;
+            String error = request.params("error");
 
+            primero = error.substring(0,1);
+            segundo = error.substring(1,2);
+            tercero = error.substring(2,3);
+
+            System.out.println("numero: " + primero + " " + segundo + " " + tercero);
+            attributes.put("primero", primero);
+            attributes.put("segundo", segundo);
+            attributes.put("tercero", tercero);
             attributes.put("mensaje", "Usted no tiene permisos para esta area!");
 
             return new ModelAndView(attributes, "error.ftl");
