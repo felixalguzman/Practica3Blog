@@ -29,11 +29,11 @@
         </button>
         <div class="collapse navbar-collapse" id="navbarResponsive">
             <ul class="navbar-nav ml-auto">
-                <li class="nav-item">
+                <li class="nav-item" th:if="${user != null}">
                     <a class="nav-link" href="/agregarPost">Agregar Post</a>
                 </li>
 
-                <li class="nav-item">
+                <li class="nav-item" th:if="${user != null}">
                     <a class="nav-link" href="/agregarUsuario">Agregar Usuario</a>
                 </li>
 

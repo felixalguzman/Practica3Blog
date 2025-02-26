@@ -19,6 +19,7 @@ import org.thymeleaf.templateresolver.ClassLoaderTemplateResolver;
 import io.javalin.rendering.template.JavalinThymeleaf;
 
 import java.sql.SQLException;
+import java.util.Base64;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -70,7 +71,7 @@ public class Main {
                 User user1 = userService.validateLogIn(userDecrypted, contraDecrypted);
                 if (user1 != null) {
                     Main.user = user1;
-                    ctx.sessionAttribute("usuario", Main.user);
+                    ctx.sessionAttribute("user", Main.user);
                     System.out.println("User found");
                     ctx.redirect("/inicio");
                     return;
@@ -86,7 +87,7 @@ public class Main {
             attributes.put("titulo", "Inicio");
             attributes.put("etiquetas", tagService.getAll());
             attributes.put("list", articleService.getAll());
-            attributes.put("usuario", user);
+            attributes.put("user", user);
 
             ctx.render("/templates/inicio.html", attributes);
         });
@@ -99,7 +100,7 @@ public class Main {
             attributes.put("articulo", article);
             attributes.put("comentarios", commentService.getArticleById(Integer.parseInt(idArticulo)));
             attributes.put("etiquetas", tagService.getArticleById(Integer.parseInt(idArticulo)));
-            attributes.put("usuario", user);
+            attributes.put("user", user);
 
             ctx.render("/templates/post.html", attributes);
         });
@@ -177,7 +178,7 @@ public class Main {
         });
 
         app.post("/iniciarSesion", ctx -> {
-            String username = ctx.formParam("usuario");
+            String username = ctx.formParam("user");
             String password = ctx.formParam("password");
             String remember = ctx.formParam("remember");
 
@@ -190,20 +191,21 @@ public class Main {
                     String passwordEncrypt = crypto.encrypt(password, iv, secretKeyContra);
 
                     var value = userEncrypt + "," + passwordEncrypt;
-                    var cookie = new Cookie("login", value, "/", 604800);
+                    String encodedValue = Base64.getEncoder().encodeToString(value.getBytes());
+                    var cookie = new Cookie("login", encodedValue, "/", 604800);
                     ctx.cookie(cookie);
                 }
                 Main.user = user1;
-                ctx.sessionAttribute("usuario", Main.user);
+                ctx.sessionAttribute("user", Main.user);
                 ctx.redirect("/inicio");
             } else {
-                ctx.redirect("/inicio");
+                ctx.redirect("/");
             }
         });
 
         app.get("/logOut", ctx -> {
             user = null;
-            ctx.sessionAttribute("usuario", null);
+            ctx.sessionAttribute("user", null);
             ctx.removeCookie("login");
             ctx.redirect("/inicio");
         });
