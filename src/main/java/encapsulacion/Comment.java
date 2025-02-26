@@ -1,19 +1,19 @@
 package encapsulacion;
 
-public class Comentario {
+public class Comment {
 
     private long id;
     private String comentario;
-    private Usuario autor;
-    private Articulo articulo;
+    private User autor;
+    private Article article;
 
-    public Comentario() {
+    public Comment() {
     }
 
-    public Comentario(String comentario, Usuario autor, Articulo articulo) {
+    public Comment(String comentario, User autor, Article article) {
         this.comentario = comentario;
         this.autor = autor;
-        this.articulo = articulo;
+        this.article = article;
     }
 
     public long getId() {
@@ -32,19 +32,19 @@ public class Comentario {
         this.comentario = comentario;
     }
 
-    public Usuario getAutor() {
+    public User getAutor() {
         return autor;
     }
 
-    public void setAutor(Usuario autor) {
+    public void setAutor(User autor) {
         this.autor = autor;
     }
 
-    public Articulo getArticulo() {
-        return articulo;
+    public Article getArticulo() {
+        return article;
     }
 
-    public void setArticulo(Articulo articulo) {
-        this.articulo = articulo;
+    public void setArticulo(Article article) {
+        this.article = article;
     }
 }

@@ -67,13 +67,13 @@
                 </thead>
                 <tbody>
                         <#assign x = 0>
-                        <#list usuarios as usuario>
+                        <#list usuarios as user>
                             <tr>
 
-                                <td>${usuario.nombre}</td>
-                                <td>${usuario.username}</td>
-                                <td>${usuario.administrator?then("Si", "No")}</td>
-                                <td>${usuario.autor?then("Si", "No")}</td>
+                                <td>${user.nombre}</td>
+                                <td>${user.username}</td>
+                                <td>${user.administrator?then("Si", "No")}</td>
+                                <td>${user.autor?then("Si", "No")}</td>
 
 
                                 <td><a href="/eliminarUsuario/${x}"   class="btn"><i class="far fa-trash-alt"></i></a></td>

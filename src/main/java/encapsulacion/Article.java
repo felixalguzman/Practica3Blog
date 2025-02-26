@@ -3,27 +3,27 @@ package encapsulacion;
 import java.sql.Date;
 import java.util.List;
 
-public class Articulo {
+public class Article {
 
     private long id;
     private String titulo;
     private String cuerpo;
-    private Usuario autor;
+    private User autor;
     private Date fecha;
-    private List<Comentario> listaComentarios;
-    private List<Etiqueta> listaEtiquetas;
+    private List<Comment> listaComments;
+    private List<Tag> listaTags;
 
-    public Articulo() {
+    public Article() {
     }
 
-    public Articulo(String titulo, String cuerpo, Usuario autor, Date fecha) {
+    public Article(String titulo, String cuerpo, User autor, Date fecha) {
         this.titulo = titulo;
         this.cuerpo = cuerpo;
         this.autor = autor;
         this.fecha = fecha;
     }
 
-    public Articulo(long id, String titulo, String cuerpo, Usuario autor, Date fecha) {
+    public Article(long id, String titulo, String cuerpo, User autor, Date fecha) {
         this.id = id;
         this.titulo = titulo;
         this.cuerpo = cuerpo;
@@ -55,11 +55,11 @@ public class Articulo {
         this.cuerpo = cuerpo;
     }
 
-    public Usuario getAutor() {
+    public User getAutor() {
         return autor;
     }
 
-    public void setAutor(Usuario autor) {
+    public void setAutor(User autor) {
         this.autor = autor;
     }
 
@@ -71,19 +71,19 @@ public class Articulo {
         this.fecha = fecha;
     }
 
-    public List<Comentario> getListaComentarios() {
-        return listaComentarios;
+    public List<Comment> getListaComentarios() {
+        return listaComments;
     }
 
-    public void setListaComentarios(List<Comentario> listaComentarios) {
-        this.listaComentarios = listaComentarios;
+    public void setListaComentarios(List<Comment> listaComments) {
+        this.listaComments = listaComments;
     }
 
-    public List<Etiqueta> getListaEtiquetas() {
-        return listaEtiquetas;
+    public List<Tag> getListaEtiquetas() {
+        return listaTags;
     }
 
-    public void setListaEtiquetas(List<Etiqueta> listaEtiquetas) {
-        this.listaEtiquetas = listaEtiquetas;
+    public void setListaEtiquetas(List<Tag> listaTags) {
+        this.listaTags = listaTags;
     }
 }

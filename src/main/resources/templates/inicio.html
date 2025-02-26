@@ -2,21 +2,19 @@
 <html lang="en">
 
 <head>
-
     <meta charset="utf-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
     <meta name="description" content="">
     <meta name="author" content="">
-
-    <title>Blog Post - Start Bootstrap Template</title>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <link rel="stylesheet" href="//cdn.jsdelivr.net/bootstrap.tagsinput/0.4.2/bootstrap-tagsinput.css" />
+    <title>Blog - Practica 3</title>
 
     <!-- Bootstrap core CSS -->
-    <link href="../vendor/bootstrap/css/bootstrap.min.css" rel="stylesheet">
+    <link href="/vendor/bootstrap/css/bootstrap.min.css" rel="stylesheet">
 
     <!-- Custom styles for this template -->
-    <link href="../css/blog-post.css" rel="stylesheet">
-    <link rel="stylesheet" type="text/css" href="../css/my-login.css">
-    <link href="../css/blog-login.css" rel="stylesheet">
+    <link href="/css/blog-home.css" rel="stylesheet">
 </head>
 
 <body>
@@ -39,17 +37,13 @@
                     <a class="nav-link" href="/agregarUsuario">Agregar Usuario</a>
                 </li>
 
-                <#if (usuario??)>
-                     <li class="nav-item">
-                         <a class="nav-link" href="/logOut">Salir</a>
-                     </li>
-                <#else>
-                 <li class="nav-item">
-                     <a class="nav-link" href="/">Log In</a>
-                 </li>
-                </#if>
-
-
+                <!-- Thymeleaf conditional rendering -->
+                <li class="nav-item" th:if="${user != null}">
+                    <a class="nav-link" href="/logOut">Salir</a>
+                </li>
+                <li class="nav-item" th:if="${user == null}">
+                    <a class="nav-link" href="/">Log In</a>
+                </li>
             </ul>
         </div>
     </div>
@@ -60,49 +54,45 @@
 
     <div class="row">
 
-        <!-- Post Content Column -->
-        <div class="col-lg-8">
+        <!-- Blog Entries Column -->
+        <div class="col-md-8">
 
-            <div class="lead">
-                <!-- Title -->
-                <form method="post" action="/guardarUsuario" style="width: 500px">
+            <h1 class="my-4" th:text="${titulo}">Default Title</h1>
 
-                    <div class="form-group">
-                        <h1 class="mt-4">Agregar Usuario</h1>
-
-                        <label>Nombre de usuario</label>
-                        <input type="text" class="form-control" placeholder="username" aria-label="Username"
-                               name="usuario" required>
+            <!-- Thymeleaf loop for articles -->
+            <div th:each="article : ${list}">
+                <!-- Blog Post -->
+                <div class="card mb-4">
+                    <div class="card-body">
+                        <h2 class="card-title" th:text="${article.titulo}">Default Article Title</h2>
+                        <p class="card-text" th:text="${article.cuerpo}">Default Article Body</p>
+                        <a th:href="@{/verMas/{id}(id=${article.id})}" style="float: right" class="btn btn-primary">Leer más &rarr;</a>
                     </div>
-
-                    <div class="form-group">
-                        <label>Nombre</label>
-                        <input type="text" class="form-control" rows="3" placeholder="John Doe" name="nombre" required>
+                    <div>
+                        <!-- Thymeleaf loop for tags -->
+                        <span class="badge badge-primary" th:each="tag : ${etiquetas}"
+                              th:if="${tag.article.id == article.id}"
+                              th:text="${tag.tag}">Default Tag</span>
                     </div>
-
-                    <div class="form-group">
-                        <label>Password</label>
-                        <input type="password" id="password" class="form-control" rows="3" name="pass" required
-                               data-eye>
+                    <div class="card-footer text-muted">
+                        Publicado el <span th:text="${article.fecha}">Default Date</span> por
+                        <a th:href="@{/ver/{id}(id=${article.autor.id})}" th:text="${article.autor.nombre}">Default Author</a>
                     </div>
-                    <div class="form-check-inline">
-                        <input class="toggle" type="checkbox" name="admin"> Administrador
-
-                    </div>
-                    <div class="form-inline">
-                       <input class="toggle" style="padding: 5px" type="checkbox" name="autor"> Autor
-                    </div>
-
-
-
-                    <hr>
-
-                    <button style="float: right" type="submit" class="btn btn-primary">Guardar</button>
-                </form>
+                </div>
             </div>
 
+            <!-- Pagination -->
+            <ul class="pagination justify-content-center mb-4">
+                <li class="page-item">
+                    <a class="page-link" href="#">&larr; Older</a>
+                </li>
+                <li class="page-item disabled">
+                    <a class="page-link" href="#">Newer &rarr;</a>
+                </li>
+            </ul>
 
         </div>
+
         <!-- Sidebar Widgets Column -->
         <div class="col-md-4">
 
@@ -113,8 +103,8 @@
                     <div class="input-group">
                         <input type="text" class="form-control" placeholder="Search for...">
                         <span class="input-group-btn">
-                  <button class="btn btn-secondary" type="button">Go!</button>
-                </span>
+                                <button class="btn btn-secondary" type="button">Go!</button>
+                            </span>
                     </div>
                 </div>
             </div>
@@ -158,8 +148,8 @@
             <div class="card my-4">
                 <h5 class="card-header">Side Widget</h5>
                 <div class="card-body">
-                    You can put anything you want inside of these side widgets. They are easy to use, and feature the
-                    new Bootstrap 4 card containers!
+                    You can put anything you want inside of these side widgets. They are easy to use, and feature
+                    the new Bootstrap 4 card containers!
                 </div>
             </div>
 
@@ -180,8 +170,11 @@
 </footer>
 
 <!-- Bootstrap core JavaScript -->
-<script src="../vendor/vendor/jquery/jquery.min.js"></script>
-<script src="../vendor/vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
+<script src="/vendor/jquery/jquery.min.js"></script>
+<script src="/vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
+<script src="/vendor/bootstrap/js/jquery.min.js"></script>
+<script src="/vendor/bootstrap/js/bootstrap.min.js"></script>
+<script src="/vendor/bootstrap/js/my-login.js"></script>
 
 </body>
 

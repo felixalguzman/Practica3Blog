@@ -38,7 +38,7 @@
                       <a class="nav-link" href="/agregarUsuario">Agregar Usuario</a>
                   </li>
 
-                    <#if (usuario??)>
+                    <#if (user??)>
                          <li class="nav-item">
                              <a class="nav-link" href="/logOut">Salir</a>
                          </li>
@@ -64,24 +64,24 @@
         <div class="col-lg-8">
 
           <!-- Title -->
-          <h1 class="mt-4">${articulo.titulo}</h1>
+          <h1 class="mt-4">${article.titulo}</h1>
 
           <!-- Author -->
           <p class="lead">
             Por
-            <a href="/ver/${articulo.autor.id}">${articulo.autor.nombre}</a>
+            <a href="/ver/${article.autor.id}">${article.autor.nombre}</a>
           </p>
 
           <hr>
 
           <!-- Post Content -->
-          <p class="lead">${articulo.cuerpo}</p>
+          <p class="lead">${article.cuerpo}</p>
 
           <!-- Date/Time -->
-          <p>Publicado el ${articulo.fecha}</p>
+          <p>Publicado el ${article.fecha}</p>
             <div>
-                <a href="/editarPost/${articulo.id}" class="btn btn-primary">Editar Articulo</a>
-                <a href="/eliminarPost/${articulo.autor.id}/${articulo.id}" class="btn btn-primary">Eliminar Articulo</a>
+                <a href="/editarPost/${article.id}" class="btn btn-primary">Editar Articulo</a>
+                <a href="/eliminarPost/${article.autor.id}/${article.id}" class="btn btn-primary">Eliminar Articulo</a>
             </div>
 
 
@@ -90,13 +90,13 @@
 
           <!-- Comments Form -->
           <div class="card my-4">
-            <h5 class="card-header">Deja un comentario:</h5>
+            <h5 class="card-header">Deja un comment:</h5>
             <div class="card-body">
               <form method="post" action="/agregarComentario">
                 <div class="form-group">
-                    <textarea class="form-control" rows="3" name="comentario"></textarea>
-                    <input type="hidden" name="articulo" value="${articulo.id}">
-                    <input type="hidden" name="autor" value="${articulo.autor.id}">
+                    <textarea class="form-control" rows="3" name="comment"></textarea>
+                    <input type="hidden" name="article" value="${article.id}">
+                    <input type="hidden" name="autor" value="${article.autor.id}">
                 </div>
                 <button style="float: right" type="submit" class="btn btn-primary">Guardar</button>
               </form>
@@ -104,12 +104,12 @@
           </div>
 
 
-          <#list comentarios as comentario>
+          <#list comentarios as comment>
                 <!-- Single Comment -->
           <div class="media mb-4">
               <div class="media-body">
-                  <h5 class="mt-0">${comentario.autor.nombre}</h5>
-                  ${comentario.comentario}
+                  <h5 class="mt-0">${comment.autor.nombre}</h5>
+                  ${comment.comment}
               </div>
           </div>
           </#list>
@@ -124,8 +124,8 @@
           <div class="card my-4">
             <h5 class="card-header">Etiquetas</h5>
             <ul>
-                <#list etiquetas as etiqueta>
-                    <li><span class="badge badge-primary">${etiqueta.etiqueta}</span></li>
+                <#list etiquetas as tag>
+                    <li><span class="badge badge-primary">${tag.tag}</span></li>
                 </#list>
             </ul>
           </div>

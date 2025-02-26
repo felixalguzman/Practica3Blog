@@ -1,9 +1,9 @@
 package modelo.dao.Implementations;
 
-import encapsulacion.Comentario;
-import encapsulacion.Usuario;
-import modelo.dao.interfaces.ComentarioDAO;
-import modelo.servicios.EntityServices.UsuarioService;
+import encapsulacion.Comment;
+import encapsulacion.User;
+import modelo.dao.interfaces.CommentDao;
+import modelo.servicios.EntityServices.UserService;
 import modelo.servicios.Utils.DBService;
 
 import java.sql.Connection;
@@ -15,15 +15,15 @@ import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
-public class ComentarioDAOImpl implements ComentarioDAO {
+public class CommentDaoImpl implements CommentDao {
 
     @Override
-    public void insert(Comentario e) {
+    public void insert(Comment e) {
         Connection con = null;
 
         try	{
 
-            con = DBService.getInstancia().connection();
+            con = DBService.getInstance().getConnection();
             String sql = "Insert into PUBLIC.COMENTARIO(id, COMENTARIO, AUTOR, ARTICULO) values(nextval('SECUENCIA_COMENTARIO'), ?, ?, ?); ";
             PreparedStatement preparedStatement = con.prepareStatement(sql);
 
@@ -35,24 +35,24 @@ public class ComentarioDAOImpl implements ComentarioDAO {
 
 
         } catch (Exception e1) {
-            Logger.getLogger(ComentarioDAOImpl.class.getName()).log(Level.SEVERE, null, e1);
+            Logger.getLogger(CommentDaoImpl.class.getName()).log(Level.SEVERE, null, e1);
         }finally{
 
             try {
                 assert con != null;
                 con.close();
             } catch (SQLException e1) {
-                Logger.getLogger(ComentarioDAOImpl.class.getName()).log(Level.SEVERE, null, e1);
+                Logger.getLogger(CommentDaoImpl.class.getName()).log(Level.SEVERE, null, e1);
             }
         }
     }
 
     @Override
-    public void update(Comentario e) {
+    public void update(Comment e) {
         Connection con = null;
         try {
 
-            con = DBService.getInstancia().connection();
+            con = DBService.getInstance().getConnection();
             String sql = "UPDATE PUBLIC.COMENTARIO u SET COMENTARIO = ?, AUTOR = ?, ARTICULO = ? WHERE u.id = ?";
             PreparedStatement preparedStatement = con.prepareStatement(sql);
            
@@ -64,24 +64,24 @@ public class ComentarioDAOImpl implements ComentarioDAO {
             preparedStatement.executeUpdate();
 
         }catch (Exception e1){
-            Logger.getLogger(ComentarioDAOImpl.class.getName()).log(Level.SEVERE, null, e1);
+            Logger.getLogger(CommentDaoImpl.class.getName()).log(Level.SEVERE, null, e1);
         }finally {
             try {
                 assert con != null;
                 con.close();
             } catch (SQLException e1) {
-                Logger.getLogger(ComentarioDAOImpl.class.getName()).log(Level.SEVERE, null, e1);
+                Logger.getLogger(CommentDaoImpl.class.getName()).log(Level.SEVERE, null, e1);
             }
         }
 
     }
 
     @Override
-    public void delete(Comentario e) {
+    public void delete(Comment e) {
         Connection con = null;
 
         try {
-            con = DBService.getInstancia().connection();
+            con = DBService.getInstance().getConnection();
             String sql = "delete from PUBLIC.COMENTARIO where id=?";
             PreparedStatement preparedStatement = con.prepareStatement(sql);
             preparedStatement.setLong(1, e.getId());
@@ -89,14 +89,14 @@ public class ComentarioDAOImpl implements ComentarioDAO {
             preparedStatement.execute();
 
         }catch (Exception e1){
-            Logger.getLogger(ComentarioDAOImpl.class.getName()).log(Level.SEVERE, null, e1);
+            Logger.getLogger(CommentDaoImpl.class.getName()).log(Level.SEVERE, null, e1);
 
         }finally {
             try {
                 assert con != null;
                 con.close();
             } catch (SQLException e1) {
-                Logger.getLogger(ComentarioDAOImpl.class.getName()).log(Level.SEVERE, null, e1);
+                Logger.getLogger(CommentDaoImpl.class.getName()).log(Level.SEVERE, null, e1);
 
             }
         }
@@ -104,34 +104,34 @@ public class ComentarioDAOImpl implements ComentarioDAO {
     }
 
     @Override
-    public List<Comentario> getAll() {
-        List<Comentario> list = new ArrayList<>();
+    public List<Comment> getAll() {
+        List<Comment> list = new ArrayList<>();
         Connection con = null;
 
         try {
             String sql = "select * from PUBLIC.COMENTARIO";
-            con = DBService.getInstancia().connection();
+            con = DBService.getInstance().getConnection();
 
             PreparedStatement preparedStatement = con.prepareStatement(sql);
             ResultSet resultSet = preparedStatement.executeQuery();
 
             while (resultSet.next()) {
 
-                Comentario comentario = new Comentario();
-                comentario.setId(resultSet.getLong("id"));
-                comentario.setComentario(resultSet.getString("comentario"));
+                Comment comment = new Comment();
+                comment.setId(resultSet.getLong("id"));
+                comment.setComentario(resultSet.getString("comentario"));
 
-                list.add(comentario);
+                list.add(comment);
             }
         } catch (Exception e) {
-            Logger.getLogger(ComentarioDAOImpl.class.getName()).log(Level.SEVERE, null, e);
+            Logger.getLogger(CommentDaoImpl.class.getName()).log(Level.SEVERE, null, e);
 
         }finally{
             try {
                 assert con != null;
                 con.close();
             } catch (SQLException e) {
-                Logger.getLogger(ComentarioDAOImpl.class.getName()).log(Level.SEVERE, null, e);
+                Logger.getLogger(CommentDaoImpl.class.getName()).log(Level.SEVERE, null, e);
             }
         }
 
@@ -140,12 +140,12 @@ public class ComentarioDAOImpl implements ComentarioDAO {
     }
 
     @Override
-    public Comentario getById(long id) {
+    public Comment getById(long id) {
         Connection con = null;
-        Comentario comentario = null;
+        Comment comment = null;
 
         try {
-            con = DBService.getInstancia().connection();
+            con = DBService.getInstance().getConnection();
             String sql = "SELECT * FROM PUBLIC.COMENTARIO u WHERE u.ID = ?";
             PreparedStatement preparedStatement = con.prepareStatement(sql);
             preparedStatement.setLong(1, id);
@@ -154,33 +154,33 @@ public class ComentarioDAOImpl implements ComentarioDAO {
 
             while (resultSet.next()){
 
-                comentario = new Comentario();
-                comentario.setId(resultSet.getLong("id"));
-                comentario.setComentario(resultSet.getString("comentario"));
+                comment = new Comment();
+                comment.setId(resultSet.getLong("id"));
+                comment.setComentario(resultSet.getString("comentario"));
             }
 
         }catch (Exception e){
-            Logger.getLogger(ComentarioDAOImpl.class.getName()).log(Level.SEVERE, null, e);
+            Logger.getLogger(CommentDaoImpl.class.getName()).log(Level.SEVERE, null, e);
 
         }finally {
             try {
                 assert con != null;
                 con.close();
             } catch (SQLException e) {
-                Logger.getLogger(ComentarioDAOImpl.class.getName()).log(Level.SEVERE, null, e);
+                Logger.getLogger(CommentDaoImpl.class.getName()).log(Level.SEVERE, null, e);
 
             }
         }
-        return comentario;
+        return comment;
     }
 
     @Override
-    public List<Comentario> getByArticulo(long id) {
+    public List<Comment> getArticleById(long id) {
         Connection con = null;
-        List<Comentario> list = new ArrayList<>();
+        List<Comment> list = new ArrayList<>();
 
         try {
-            con = DBService.getInstancia().connection();
+            con = DBService.getInstance().getConnection();
             String sql = "SELECT * FROM PUBLIC.COMENTARIO  WHERE ARTICULO = ?";
             PreparedStatement preparedStatement = con.prepareStatement(sql);
             preparedStatement.setLong(1, id);
@@ -189,24 +189,24 @@ public class ComentarioDAOImpl implements ComentarioDAO {
 
             while (resultSet.next()){
 
-                Comentario comentario = new Comentario();
-                comentario.setId(resultSet.getLong("ID"));
-                comentario.setComentario(resultSet.getString("comentario"));
-                UsuarioService usuarioService = new UsuarioService();
-                Usuario usuario = usuarioService.getById(resultSet.getLong("autor"));
-                comentario.setAutor(usuario);
-                list.add(comentario);
+                Comment comment = new Comment();
+                comment.setId(resultSet.getLong("ID"));
+                comment.setComentario(resultSet.getString("comentario"));
+                UserService userService = new UserService();
+                User user = userService.getById(resultSet.getLong("autor"));
+                comment.setAutor(user);
+                list.add(comment);
             }
 
         }catch (Exception e){
-            Logger.getLogger(ComentarioDAOImpl.class.getName()).log(Level.SEVERE, null, e);
+            Logger.getLogger(CommentDaoImpl.class.getName()).log(Level.SEVERE, null, e);
 
         }finally {
             try {
                 assert con != null;
                 con.close();
             } catch (SQLException e) {
-                Logger.getLogger(ComentarioDAOImpl.class.getName()).log(Level.SEVERE, null, e);
+                Logger.getLogger(CommentDaoImpl.class.getName()).log(Level.SEVERE, null, e);
 
             }
         }

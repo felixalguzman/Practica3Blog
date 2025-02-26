@@ -1,7 +1,9 @@
 package modelo.servicios.Utils;
 
-import sun.misc.BASE64Decoder;
-import sun.misc.BASE64Encoder;
+import java.nio.charset.StandardCharsets;
+import java.util.Arrays;
+import java.util.Base64;
+
 
 import javax.crypto.Cipher;
 import javax.crypto.NoSuchPaddingException;
@@ -28,10 +30,9 @@ public class Crypto {
     }
 
 
-
     private Cipher initCipher(final int mode, final String initialVectorString, final String secretKey)
 
-        throws NoSuchAlgorithmException, NoSuchPaddingException, InvalidKeyException, InvalidAlgorithmParameterException {
+            throws NoSuchAlgorithmException, NoSuchPaddingException, InvalidKeyException, InvalidAlgorithmParameterException {
 
         final SecretKeySpec skeySpec = new SecretKeySpec(md5(secretKey).getBytes(), "AES");
 
@@ -44,7 +45,6 @@ public class Crypto {
         return cipher;
 
     }
-
 
 
     public String encrypt(final String dataToEncrypt, final String initialVector, final String secretKey) {
@@ -63,7 +63,7 @@ public class Crypto {
 
             // Encode using Base64
 
-            encryptedData = (new BASE64Encoder()).encode(encryptedByteArray);
+            encryptedData = Arrays.toString(Base64.getEncoder().encode(encryptedByteArray));
 
         } catch (Exception e) {
 
@@ -89,13 +89,13 @@ public class Crypto {
 
             // Decode using Base64
 
-            final byte[] encryptedByteArray = (new BASE64Decoder()).decodeBuffer(encryptedData);
+            final byte[] encryptedByteArray = Base64.getDecoder().decode(encryptedData);
 
             // Decrypt the data
 
             final byte[] decryptedByteArray = cipher.doFinal(encryptedByteArray);
 
-            decryptedData = new String(decryptedByteArray, "UTF8");
+            decryptedData = new String(decryptedByteArray, StandardCharsets.UTF_8);
 
         } catch (Exception e) {
 
@@ -108,7 +108,6 @@ public class Crypto {
         return decryptedData;
 
     }
-
 
 
 }

@@ -1,8 +1,8 @@
 package modelo.dao.Implementations;
 
-import encapsulacion.Etiqueta;
-import modelo.dao.interfaces.EtiquetaDAO;
-import modelo.servicios.EntityServices.ArticuloService;
+import encapsulacion.Tag;
+import modelo.dao.interfaces.TagDao;
+import modelo.servicios.EntityServices.ArticleService;
 import modelo.servicios.Utils.DBService;
 
 import java.sql.Connection;
@@ -14,15 +14,15 @@ import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
-public class EtiquetaDAOImpl implements EtiquetaDAO {
+public class TagDaoImpl implements TagDao {
 
     @Override
-    public void insert(Etiqueta e){
+    public void insert(Tag e){
         Connection con = null;
 
         try	{
 
-            con = DBService.getInstancia().connection();
+            con = DBService.getInstance().getConnection();
             String sql = "Insert into PUBLIC.ETIQUETA(id, ETIQUETA, ARTICULO) values(nextval('SECUENCIA_ETIQUETA') , ?, ?); ";
             PreparedStatement preparedStatement = con.prepareStatement(sql);
 
@@ -34,25 +34,25 @@ public class EtiquetaDAOImpl implements EtiquetaDAO {
 
 
         } catch (Exception e1) {
-            Logger.getLogger(EtiquetaDAOImpl.class.getName()).log(Level.SEVERE, null, e1);
+            Logger.getLogger(TagDaoImpl.class.getName()).log(Level.SEVERE, null, e1);
         }finally{
 
             try {
                 assert con != null;
                 con.close();
             } catch (SQLException e1) {
-                Logger.getLogger(EtiquetaDAOImpl.class.getName()).log(Level.SEVERE, null, e1);
+                Logger.getLogger(TagDaoImpl.class.getName()).log(Level.SEVERE, null, e1);
             }
         }
     }
 
     @Override
-    public void update(Etiqueta e) {
+    public void update(Tag e) {
 
         Connection con = null;
         try {
 
-            con = DBService.getInstancia().connection();
+            con = DBService.getInstance().getConnection();
             String sql = "UPDATE PUBLIC.ETIQUETA u SET id = ?, ETIQUETA= ? WHERE u.id = ?";
             PreparedStatement preparedStatement = con.prepareStatement(sql);
 
@@ -63,24 +63,24 @@ public class EtiquetaDAOImpl implements EtiquetaDAO {
             preparedStatement.executeUpdate();
 
         }catch (Exception e1){
-            Logger.getLogger(EtiquetaDAOImpl.class.getName()).log(Level.SEVERE, null, e1);
+            Logger.getLogger(TagDaoImpl.class.getName()).log(Level.SEVERE, null, e1);
         }finally {
             try {
                 assert con != null;
                 con.close();
             } catch (SQLException e1) {
-                Logger.getLogger(EtiquetaDAOImpl.class.getName()).log(Level.SEVERE, null, e1);
+                Logger.getLogger(TagDaoImpl.class.getName()).log(Level.SEVERE, null, e1);
             }
         }
 
     }
 
     @Override
-    public void delete(Etiqueta e) {
+    public void delete(Tag e) {
         Connection con = null;
 
         try {
-            con = DBService.getInstancia().connection();
+            con = DBService.getInstance().getConnection();
             String sql = "delete from PUBLIC.ETIQUETA where id=?";
             PreparedStatement preparedStatement = con.prepareStatement(sql);
             preparedStatement.setLong(1, e.getId());
@@ -88,60 +88,60 @@ public class EtiquetaDAOImpl implements EtiquetaDAO {
             preparedStatement.execute();
 
         }catch (Exception e1){
-            Logger.getLogger(EtiquetaDAOImpl.class.getName()).log(Level.SEVERE, null, e1);
+            Logger.getLogger(TagDaoImpl.class.getName()).log(Level.SEVERE, null, e1);
 
         }finally {
             try {
                 assert con != null;
                 con.close();
             } catch (SQLException e1) {
-                Logger.getLogger(EtiquetaDAOImpl.class.getName()).log(Level.SEVERE, null, e1);
+                Logger.getLogger(TagDaoImpl.class.getName()).log(Level.SEVERE, null, e1);
 
             }
         }
     }
 
     @Override
-    public List<Etiqueta> getAll() {
-        List<Etiqueta> list = new ArrayList<>();
+    public List<Tag> getAll() {
+        List<Tag> list = new ArrayList<>();
         Connection con = null;
 
         try {
             String sql = "select * from PUBLIC.ETIQUETA";
-            con = DBService.getInstancia().connection();
+            con = DBService.getInstance().getConnection();
 
             PreparedStatement preparedStatement = con.prepareStatement(sql);
             ResultSet resultSet = preparedStatement.executeQuery();
 
             while (resultSet.next()) {
-                Etiqueta etiqueta = new Etiqueta();
-                ArticuloService articuloService = new ArticuloService();
-                etiqueta.setId(resultSet.getLong("id"));
-                etiqueta.setEtiqueta(resultSet.getString("etiqueta"));
-                etiqueta.setArticulo(articuloService.getById(resultSet.getLong("articulo")));
-                list.add(etiqueta);
+                Tag tag = new Tag();
+                ArticleService articleService = new ArticleService();
+                tag.setId(resultSet.getLong("id"));
+                tag.setEtiqueta(resultSet.getString("etiqueta"));
+                tag.setArticulo(articleService.getById(resultSet.getLong("articulo")));
+                list.add(tag);
             }
         } catch (Exception e) {
-            Logger.getLogger(EtiquetaDAOImpl.class.getName()).log(Level.SEVERE, null, e);
+            Logger.getLogger(TagDaoImpl.class.getName()).log(Level.SEVERE, null, e);
         }finally{
             try {
                 assert con != null;
                 con.close();
             } catch (SQLException e) {
-                Logger.getLogger(EtiquetaDAOImpl.class.getName()).log(Level.SEVERE, null, e);
+                Logger.getLogger(TagDaoImpl.class.getName()).log(Level.SEVERE, null, e);
             }
         }
         return list;
     }
 
     @Override
-    public Etiqueta getById(long id) {
+    public Tag getById(long id) {
 
         Connection con = null;
-        Etiqueta etiqueta = null;
+        Tag tag = null;
 
         try {
-            con = DBService.getInstancia().connection();
+            con = DBService.getInstance().getConnection();
             String sql = "SELECT * FROM PUBLIC.ETIQUETA u WHERE u.ID = ?";
             PreparedStatement preparedStatement = con.prepareStatement(sql);
             preparedStatement.setLong(1, id);
@@ -150,34 +150,34 @@ public class EtiquetaDAOImpl implements EtiquetaDAO {
 
             while (resultSet.next()){
 
-                etiqueta = new Etiqueta();
-                etiqueta.setId(resultSet.getLong("id"));
-                etiqueta.setEtiqueta(resultSet.getString("etiqueta"));
+                tag = new Tag();
+                tag.setId(resultSet.getLong("id"));
+                tag.setEtiqueta(resultSet.getString("etiqueta"));
             }
 
         }catch (Exception e){
-            Logger.getLogger(EtiquetaDAOImpl.class.getName()).log(Level.SEVERE, null, e);
+            Logger.getLogger(TagDaoImpl.class.getName()).log(Level.SEVERE, null, e);
 
         }finally {
             try {
                 assert con != null;
                 con.close();
             } catch (SQLException e) {
-                Logger.getLogger(EtiquetaDAOImpl.class.getName()).log(Level.SEVERE, null, e);
+                Logger.getLogger(TagDaoImpl.class.getName()).log(Level.SEVERE, null, e);
 
             }
         }
-        return etiqueta;
+        return tag;
     }
 
 
     @Override
-    public List<Etiqueta> getByArticulo(long id) {
+    public List<Tag> getArticleById(long id) {
         Connection con = null;
-        List<Etiqueta> list = new ArrayList<>();
+        List<Tag> list = new ArrayList<>();
 
         try {
-            con = DBService.getInstancia().connection();
+            con = DBService.getInstance().getConnection();
             String sql = "SELECT * FROM PUBLIC.ETIQUETA u WHERE u.ARTICULO = ?";
             PreparedStatement preparedStatement = con.prepareStatement(sql);
             preparedStatement.setLong(1, id);
@@ -186,21 +186,21 @@ public class EtiquetaDAOImpl implements EtiquetaDAO {
 
             while (resultSet.next()){
 
-                Etiqueta etiqueta = new Etiqueta();
-                etiqueta.setId(resultSet.getLong("id"));
-                etiqueta.setEtiqueta(resultSet.getString("etiqueta"));
-                list.add(etiqueta);
+                Tag tag = new Tag();
+                tag.setId(resultSet.getLong("id"));
+                tag.setEtiqueta(resultSet.getString("etiqueta"));
+                list.add(tag);
             }
 
         }catch (Exception e){
-            Logger.getLogger(EtiquetaDAOImpl.class.getName()).log(Level.SEVERE, null, e);
+            Logger.getLogger(TagDaoImpl.class.getName()).log(Level.SEVERE, null, e);
 
         }finally {
             try {
                 assert con != null;
                 con.close();
             } catch (SQLException e) {
-                Logger.getLogger(EtiquetaDAOImpl.class.getName()).log(Level.SEVERE, null, e);
+                Logger.getLogger(TagDaoImpl.class.getName()).log(Level.SEVERE, null, e);
 
             }
         }

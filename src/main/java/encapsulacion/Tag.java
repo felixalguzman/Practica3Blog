@@ -1,22 +1,22 @@
 package encapsulacion;
 
-public class Etiqueta {
+public class Tag {
 
     private long id;
     private String etiqueta;
-    private Articulo articulo;
+    private Article article;
 
-    public Etiqueta() {
+    public Tag() {
     }
 
-    public Etiqueta(long id, String etiqueta, Articulo articulo) {
+    public Tag(long id, String etiqueta, Article article) {
         this.id = id;
         this.etiqueta = etiqueta;
-        this.articulo = articulo;
+        this.article = article;
     }
-    public Etiqueta(String etiqueta, Articulo articulo) {
+    public Tag(String etiqueta, Article article) {
         this.etiqueta = etiqueta;
-        this.articulo = articulo;
+        this.article = article;
     }
 
     public long getId() {
@@ -35,11 +35,11 @@ public class Etiqueta {
         this.etiqueta = etiqueta;
     }
 
-    public Articulo getArticulo() {
-        return articulo;
+    public Article getArticulo() {
+        return article;
     }
 
-    public void setArticulo(Articulo articulo) {
-        this.articulo = articulo;
+    public void setArticulo(Article article) {
+        this.article = article;
     }
 }

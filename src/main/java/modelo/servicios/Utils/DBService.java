@@ -7,22 +7,22 @@ import java.util.logging.Logger;
 
 public class DBService {
 
-    private static DBService instancia;
+    private static DBService instance;
 
-    public static DBService getInstancia(){
+    public static DBService getInstance() {
 
-        if (instancia == null)
-                instancia = new DBService();
-        return instancia;
+        if (instance == null)
+            instance = new DBService();
+        return instance;
     }
 
-    public Connection connection(){
+    public Connection getConnection() {
         Connection connection = null;
 
         try {
             String url = "jdbc:h2:~/blog";
             connection = DriverManager.getConnection(url, "", "");
-        }catch (Exception e){
+        } catch (Exception e) {
             Logger.getLogger(DBService.class.getName()).log(Level.SEVERE, null, e);
         }
 
