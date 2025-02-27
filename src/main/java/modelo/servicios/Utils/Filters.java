@@ -2,6 +2,7 @@ package modelo.servicios.Utils;
 
 import encapsulacion.User;
 import io.javalin.Javalin;
+import main.Main;
 
 
 public class Filters {
@@ -9,11 +10,14 @@ public class Filters {
     public Filters(Javalin app) {
 
 
-        app.before((context) -> System.out.println("Ruta antes: " + context.fullUrl()));
+        app.before((context) -> {
+            context.sessionAttribute("user", Main.user);
+            System.out.println("Ruta antes: " + context.fullUrl());
+        });
 
         app.before("/agregarPost", (context) -> {
 
-            User user = context.sessionAttribute("usuario");
+            User user = context.sessionAttribute("user");
 
             if (user == null || !user.getAutor()) {
 
@@ -26,11 +30,12 @@ public class Filters {
 
         app.before("/agregarUsuario", (context) -> {
 
-            User user = context.sessionAttribute("usuario");
+            User user = context.sessionAttribute("user");
 
             if (user == null || !user.getAdministrator()) {
 
                 context.status(401);
+                context.redirect("/errorPost/401");
             }
 
         });
@@ -43,7 +48,7 @@ public class Filters {
 
 //                halt(401, "No tienes permiso para esta area");
                 context.status(401);
-
+                context.redirect("/errorPost/401");
             }
 
         });

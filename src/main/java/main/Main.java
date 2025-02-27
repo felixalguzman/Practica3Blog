@@ -14,9 +14,9 @@ import modelo.servicios.EntityServices.UserService;
 import modelo.servicios.Utils.BootStrapService;
 import modelo.servicios.Utils.Crypto;
 import modelo.servicios.Utils.Filters;
+import io.javalin.rendering.template.JavalinThymeleaf;
 import org.thymeleaf.TemplateEngine;
 import org.thymeleaf.templateresolver.ClassLoaderTemplateResolver;
-import io.javalin.rendering.template.JavalinThymeleaf;
 
 import java.sql.SQLException;
 import java.util.Base64;
@@ -34,10 +34,19 @@ public class Main {
     public static void main(String[] args) throws SQLException {
 
 
+        ClassLoaderTemplateResolver templateResolver = new ClassLoaderTemplateResolver();
+        templateResolver.setPrefix("templates/");
+        templateResolver.setSuffix(".html");
+        templateResolver.setTemplateMode("HTML");
+        templateResolver.setCacheable(false);
+
+        TemplateEngine templateEngine = new TemplateEngine();
+        templateEngine.setTemplateResolver(templateResolver);
+
         // Start Javalin
         var app = Javalin.create(config -> {
             config.staticFiles.add("/templates", Location.CLASSPATH); // Serve static files
-            config.fileRenderer(new JavalinThymeleaf());
+            config.fileRenderer(new JavalinThymeleaf(templateEngine));
         }).start(7070);
 
         // Initialize services
@@ -79,7 +88,7 @@ public class Main {
                     System.out.println("User not found");
                 }
             }
-            ctx.render("/templates/login.html", attributes);
+            ctx.render("login.html", attributes);
         });
 
         app.get("/inicio", ctx -> {
@@ -89,7 +98,7 @@ public class Main {
             attributes.put("list", articleService.getAll());
             attributes.put("user", user);
 
-            ctx.render("/templates/inicio.html", attributes);
+            ctx.render("inicio.html", attributes);
         });
 
         app.get("/verMas/{id}", ctx -> {
@@ -97,12 +106,12 @@ public class Main {
             String idArticulo = ctx.pathParam("id");
 
             Article article = articleService.getById(Integer.parseInt(idArticulo));
-            attributes.put("articulo", article);
+            attributes.put("article", article);
             attributes.put("comentarios", commentService.getArticleById(Integer.parseInt(idArticulo)));
             attributes.put("etiquetas", tagService.getArticleById(Integer.parseInt(idArticulo)));
             attributes.put("user", user);
 
-            ctx.render("/templates/post.html", attributes);
+            ctx.render("post.html", attributes);
         });
 
         app.post("/agregarComentario", ctx -> {
@@ -120,7 +129,7 @@ public class Main {
             ctx.redirect("/verMas/" + articulo);
         });
 
-        app.get("/agregarPost", ctx -> ctx.render("/templates/agregarPost.html"));
+        app.get("/agregarPost", ctx -> ctx.render("agregarPost.html"));
 
         app.get("/editarPost/{id}", ctx -> {
             Map<String, Object> attributes = new HashMap<>();
@@ -152,7 +161,7 @@ public class Main {
                 return;
             }
 
-            ctx.render("/templates/editarPost.html", attributes);
+            ctx.render("editarPost.html", attributes);
         });
 
         app.post("/guardarPost", ctx -> {
@@ -203,6 +212,23 @@ public class Main {
             }
         });
 
+        app.get("/agregarUsuario", ctx -> {
+            ctx.render("agregarUsuario.html");
+        });
+
+        app.post("/guardarUsuario", context -> {
+            String username = context.queryParam("usuario");
+            String nombre = context.queryParam("nombre");
+            String pass = context.queryParam("pass");
+            String autor = context.queryParam("autor");
+            String admin = context.queryParam("admin");
+            User u = new User(username, nombre, pass, admin != null, autor != null);
+            userService.insert(u);
+            context.redirect("/inicio");
+
+
+        });
+
         app.get("/logOut", ctx -> {
             user = null;
             ctx.sessionAttribute("user", null);
@@ -219,7 +245,7 @@ public class Main {
             attributes.put("tercero", error.substring(2, 3));
             attributes.put("mensaje", "Usted no tiene permisos para esta area!");
 
-            ctx.render("/templates/error.html", attributes);
+            ctx.render("error.html", attributes);
         });
     }
 }
