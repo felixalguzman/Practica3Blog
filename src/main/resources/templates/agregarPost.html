@@ -18,121 +18,123 @@
 
 <body>
 
-<!-- Navigation -->
-<div th:replace="fragments/header :: header" th:width="${user}"></div>
+    <!-- Navigation -->
+    <div th:replace="fragments/header :: header" th:with="${user}"></div>
 
-<!-- Page Content -->
-<div class="container">
+    <!-- Page Content -->
+    <div class="container">
 
-    <div class="row">
+        <div class="row">
 
-        <!-- Post Content Column -->
-        <div class="col-lg-8">
+            <!-- Post Content Column -->
+            <div class="col-lg-8">
 
-            <div class="lead">
-                <!-- Title -->
-                <form method="post" action="/guardarPost">
+                <div class="lead">
+                    <!-- Title -->
+                    <form method="post" action="/guardarPost">
 
-                    <div class="form-group">
-                        <h1 class="mt-4">Agregar Post</h1>
-                        <hr>
-                        <input type="text" class="form-control" placeholder="Titulo" aria-label="Username"
-                               aria-describedby="basic-addon1" name="titulo">
-                    </div>
+                        <div class="form-group">
+                            <h1 class="mt-4">Agregar Post</h1>
+                            <hr>
+                            <input type="text" class="form-control" placeholder="Titulo" aria-label="Username"
+                                aria-describedby="basic-addon1" name="titulo">
+                        </div>
 
-                    <div class="form-group">
-                        <h4 class="mt-4">Contenido</h4>
-                        <textarea class="form-control" rows="3" placeholder="Cuerpo del post" name="cuerpo"></textarea>
-                    </div>
+                        <div class="form-group">
+                            <h4 class="mt-4">Contenido</h4>
+                            <textarea class="form-control" rows="3" placeholder="Cuerpo del post"
+                                name="cuerpo"></textarea>
+                        </div>
 
-                    <div class="form-group">
-                        <h4 class="mt-4">Etiquetas</h4>
-                        <input type="text" class="form-control" placeholder="etiqueta1, etiqueta2,..." name="etiquetas">
-                    </div>
-                    <button style="float: right" type="submit" class="btn btn-primary">Guardar</button>
-                </form>
+                        <div class="form-group">
+                            <h4 class="mt-4">Etiquetas</h4>
+                            <input type="text" class="form-control" placeholder="etiqueta1, etiqueta2,..."
+                                name="etiquetas">
+                        </div>
+                        <button style="float: right" type="submit" class="btn btn-primary">Guardar</button>
+                    </form>
+                </div>
+
             </div>
+            <!-- Sidebar Widgets Column -->
+            <div class="col-md-4">
 
-        </div>
-        <!-- Sidebar Widgets Column -->
-        <div class="col-md-4">
-
-            <!-- Search Widget -->
-            <div class="card my-4">
-                <h5 class="card-header">Search</h5>
-                <div class="card-body">
-                    <div class="input-group">
-                        <input type="text" class="form-control" placeholder="Search for...">
-                        <span class="input-group-btn">
+                <!-- Search Widget -->
+                <div class="card my-4">
+                    <h5 class="card-header">Search</h5>
+                    <div class="card-body">
+                        <div class="input-group">
+                            <input type="text" class="form-control" placeholder="Search for...">
+                            <span class="input-group-btn">
                                 <button class="btn btn-secondary" type="button">Go!</button>
                             </span>
-                    </div>
-                </div>
-            </div>
-
-            <!-- Categories Widget -->
-            <div class="card my-4">
-                <h5 class="card-header">Categories</h5>
-                <div class="card-body">
-                    <div class="row">
-                        <div class="col-lg-6">
-                            <ul class="list-unstyled mb-0">
-                                <li>
-                                    <a href="#">Web Design</a>
-                                </li>
-                                <li>
-                                    <a href="#">HTML</a>
-                                </li>
-                                <li>
-                                    <a href="#">Freebies</a>
-                                </li>
-                            </ul>
-                        </div>
-                        <div class="col-lg-6">
-                            <ul class="list-unstyled mb-0">
-                                <li>
-                                    <a href="#">JavaScript</a>
-                                </li>
-                                <li>
-                                    <a href="#">CSS</a>
-                                </li>
-                                <li>
-                                    <a href="#">Tutorials</a>
-                                </li>
-                            </ul>
                         </div>
                     </div>
                 </div>
-            </div>
 
-            <!-- Side Widget -->
-            <div class="card my-4">
-                <h5 class="card-header">Side Widget</h5>
-                <div class="card-body">
-                    You can put anything you want inside of these side widgets. They are easy to use, and feature
-                    the new Bootstrap 4 card containers!
+                <!-- Categories Widget -->
+                <div class="card my-4">
+                    <h5 class="card-header">Categories</h5>
+                    <div class="card-body">
+                        <div class="row">
+                            <div class="col-lg-6">
+                                <ul class="list-unstyled mb-0">
+                                    <li>
+                                        <a href="#">Web Design</a>
+                                    </li>
+                                    <li>
+                                        <a href="#">HTML</a>
+                                    </li>
+                                    <li>
+                                        <a href="#">Freebies</a>
+                                    </li>
+                                </ul>
+                            </div>
+                            <div class="col-lg-6">
+                                <ul class="list-unstyled mb-0">
+                                    <li>
+                                        <a href="#">JavaScript</a>
+                                    </li>
+                                    <li>
+                                        <a href="#">CSS</a>
+                                    </li>
+                                    <li>
+                                        <a href="#">Tutorials</a>
+                                    </li>
+                                </ul>
+                            </div>
+                        </div>
+                    </div>
                 </div>
+
+                <!-- Side Widget -->
+                <div class="card my-4">
+                    <h5 class="card-header">Side Widget</h5>
+                    <div class="card-body">
+                        You can put anything you want inside of these side widgets. They are easy to use, and feature
+                        the new Bootstrap 4 card containers!
+                    </div>
+                </div>
+
             </div>
 
         </div>
+        <!-- /.row -->
 
-    </div>
-    <!-- /.row -->
-
-</div>
-<!-- /.container -->
-
-<!-- Footer -->
-<footer class="py-5 bg-dark">
-    <div class="container">
-        <p class="m-0 text-center text-white">Copyright &copy; Your Website 2018</p>
     </div>
     <!-- /.container -->
-</footer>
 
-<!-- Bootstrap core JavaScript -->
-<script src="/vendor/jquery/jquery.min.js"></script>
-<script src="/vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
+    <!-- Footer -->
+    <footer class="py-5 bg-dark">
+        <div class="container">
+            <p class="m-0 text-center text-white">Copyright &copy; Your Website 2018</p>
+        </div>
+        <!-- /.container -->
+    </footer>
+
+    <!-- Bootstrap core JavaScript -->
+    <script src="/vendor/jquery/jquery.min.js"></script>
+    <script src="/vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
 
 </body>
 

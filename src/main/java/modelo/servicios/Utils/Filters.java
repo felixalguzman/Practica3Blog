@@ -11,7 +11,8 @@ public class Filters {
 
 
         app.before((context) -> {
-            context.sessionAttribute("user", Main.user);
+            User sessionUser = context.sessionAttribute("user");
+            context.attribute("user", sessionUser);
             System.out.println("Ruta antes: " + context.fullUrl());
         });
 

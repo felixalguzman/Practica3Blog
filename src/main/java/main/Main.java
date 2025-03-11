@@ -33,7 +33,6 @@ public class Main {
 
     public static void main(String[] args) throws SQLException {
 
-
         ClassLoaderTemplateResolver templateResolver = new ClassLoaderTemplateResolver();
         templateResolver.setPrefix("templates/");
         templateResolver.setSuffix(".html");
@@ -47,7 +46,7 @@ public class Main {
         var app = Javalin.create(config -> {
             config.staticFiles.add("/templates", Location.CLASSPATH); // Serve static files
             config.fileRenderer(new JavalinThymeleaf(templateEngine));
-        }).start(7070);
+        }).start(7071);
 
         // Initialize services
         BootStrapService.startDb();
@@ -129,7 +128,12 @@ public class Main {
             ctx.redirect("/verMas/" + articulo);
         });
 
-        app.get("/agregarPost", ctx -> ctx.render("agregarPost.html"));
+        app.get("/agregarPost", ctx -> {
+            Map<String, Object> attributes = new HashMap<>();
+            User sessionUser = ctx.sessionAttribute("user");
+            attributes.put("user", sessionUser);
+            ctx.render("agregarPost.html", attributes);
+        });
 
         app.get("/editarPost/{id}", ctx -> {
             Map<String, Object> attributes = new HashMap<>();
@@ -205,7 +209,8 @@ public class Main {
                     ctx.cookie(cookie);
                 }
                 Main.user = user1;
-                ctx.sessionAttribute("user", Main.user);
+                ctx.sessionAttribute("user", user1);
+                ctx.attribute("user", user1);
                 ctx.redirect("/inicio");
             } else {
                 ctx.redirect("/");
@@ -225,7 +230,6 @@ public class Main {
             User u = new User(username, nombre, pass, admin != null, autor != null);
             userService.insert(u);
             context.redirect("/inicio");
-
 
         });
 
